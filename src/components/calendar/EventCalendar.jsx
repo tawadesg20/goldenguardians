@@ -27,7 +27,7 @@ const EventCalendar = () => {
   ];
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
+    <div className="bg-[#FFF8EA] rounded-lg shadow-md p-6">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-semibold text-[#8B4513]">Upcoming Events</h3>
         <CalendarIcon className="w-6 h-6 text-[#8B4513]" />

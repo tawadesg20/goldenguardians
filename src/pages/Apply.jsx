@@ -1,67 +1,139 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import Cookies from "js-cookie";
 const Apply = () => {
     const [user, setUser] = useState({message:"Searching"});
-      
+      const navigate = useNavigate();
+
         useEffect(() => {
           const userData = Cookies.get("user");
-          if (userData && JSON.parse(userData).skills)
+          if (userData)
           {
             setUser({message:"Found",data:JSON.parse(userData)}) // Parse the stringified object
           }
-            else if(userData)
-            setUser({message:"Found but not Volunteer",data:JSON.parse(userData)}) // Parse the stringified object
+         // Parse the stringified object
          else
           setUser({message:"Not Found"})
       }, []);
-        if (user.message!="Searching" && user.message=="Not Found") {
-          // If user is not authenticated, redirect to login
-          return <Navigate to="/login" replace />;
-        }
+        // if (user.message!="Searching" && user.message=="Not Found") {
+        //   // If user is not authenticated, redirect to login
+        //   return <Navigate to="/login" replace />;
+        // }
  
 
 
   const [formData, setFormData] = useState({
-    institution: "",
-    internshipPermission: "Allowed",
-    currentWork: "",
-    reasonsForInternship: "",
-    longTermGoals: "",
-    resonatedPart: "",
+    fullName: "",
+    email:"",
+    contact: "",
+    motivation: "",
     companionshipMeaning: "",
-    excitementAboutFriendships: "",
-    annoyancesWithOlderPeople: "",
-    department: "Marketing",
-    standoutInDepartment: "",
-    employmentDuration: "6 months",
-    stipendExpectations: "",
-    languages: [],
-    joinTime: "Immediately",
-    resume: null,
+    excitement: "",
+    handlingLoneliness: "",
+    experience: "",
+    availability: "",
+    file: null,
   });
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const [languages, setLanguages] = useState([]);
 
-  const handleFileChange = (e) => {
-    if (e.target.files) {
-      setFormData({ ...formData, resume: e.target.files[0] });
+  const onLanguagesChange = (event) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setLanguages(prevLanguages => [...prevLanguages, value])
+    } else {
+      setLanguages(prevLanguages => prevLanguages.filter(language => language !== value))
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, type, files, value } = e.target;
+    setFormData({ ...formData, [name]: type === "file" ? files[0] : value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission logic here
-    console.log(formData);
+    const data = new FormData();
+    data.append("email", formData.email);
+    data.append("fullName", formData.fullName);
+    data.append("contact", formData.contact);
+    data.append("motivation", formData.motivation);
+    data.append("companionshipMeaning", formData.companionshipMeaning);
+    data.append("excitement", formData.excitement);
+    data.append("handlingLoneliness", formData.handlingLoneliness);
+    data.append("experience", formData.experience);
+    data.append("availability", formData.availability);
+    data.append("languages", languages);
+    data.append("file",formData.file);
+
+    const API_URL = "http://localhost:5000";
+
+    axios({
+      method: "post",
+      url: API_URL+"/volunteer/application",
+      data:data,
+  })
+  .then((response) => {
+    alert(response.data.message)
+  })
+  .catch((err) => {
+    if(err.response.data.message=="Volunteer Application Form Submitted Successfully")
+    {
+      alert("You have application submitteed, admin will review application & will give authentication to register")
+      alert("You can check by registering")
+      navigate("/volunteer-registration")
+    }
+    else if(err.response.data.message=="application arleady submitted")
+    {
+      alert("You can submit application once")
+      navigate("/volunteer-registration")
+    }
+    else if(err.response.data.message=="application arleady accepted")
+      {
+        alert("Application arleady accepted, you can register now")
+        navigate("/volunteer-registration")
+      }
+    else
+      alert(err.response.data.message)
+  });
+
   };
 
   // If user is authenticated, render the child component
-   if(user.message!="Searching" && user.message=="Found but not Volunteer")
+      if(user.message!="Searching" && user.message=="Found")
         return <Navigate to="/dashboard" replace />;
     else
+
+    return <div className="container mx-auto p-8 bg-[#FFF8EA] border-[#E2C799] rounded-lg shadow-md max-w-2xl">
+    <h2 className="text-3xl font-bold mb-6 text-[#8B4513] text-center">Job Application</h2>
+    <form onSubmit={handleSubmit} className="space-y-4">
+    <input type="text" name="fullName" placeholder="Full Name" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required />
+    <input type="email" name="email" placeholder="Email" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required />
+      <input type="text" name="contact" placeholder="Contact Information" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required />
+      <textarea name="motivation" placeholder="Why do you want to volunteer with us?" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required></textarea>
+      <textarea name="companionshipMeaning" placeholder="What does companionship mean to you?" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required></textarea>
+      <textarea name="excitement" placeholder="What excites you about building friendships with senior citizens?"  onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required></textarea>
+      <textarea name="handlingLoneliness" placeholder="How would you handle a situation where a senior citizen is feeling lonely or upset?" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required></textarea>
+      <textarea name="experience" placeholder="Any previous experience in caregiving or community service?" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]"></textarea>
+      <fieldset className="border p-4 rounded-lg">
+        <legend className="font-semibold text-lg mb-2">Languages you can speak fluently:</legend>
+        <div className="grid grid-cols-2 gap-2">
+          {["English", "Hindi", "Marathi", "Gujarati", "Bengali", "Tamil"].map((lang) => (
+            <label key={lang} className="flex items-center">
+              <input type="checkbox" name="languages"  value={lang} onChange={onLanguagesChange} className="mr-2" />
+              {lang}
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <input type="text" name="availability" placeholder="Preferred availability & commitment duration" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" required />
+      <label className="block font-semibold text-lg">Resume</label>
+      <input type="file" name="file" onChange={handleChange} className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#E2C799]" />
+      <button type="submit" className="bg-[#8B4513] hover:bg-[#A0522D] text-white p-3 rounded-lg w-full font-semibold transition duration-200">Submit</button>
+    </form>
+  </div>
 
   return (
     <div className="min-h-screen bg-[#faedcd] flex items-center justify-center p-4">
@@ -74,7 +146,6 @@ const Apply = () => {
               id="institution"
               name="institution"
               type="text"
-              value={formData.institution}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -89,8 +160,8 @@ const Apply = () => {
                   type="radio"
                   name="internshipPermission"
                   value="Allowed"
-                  checked={formData.internshipPermission === "Allowed"}
-                  onChange={handleChange}
+                  onChange={(e) => setInternshipPermission(e.target.value)}
+                  required
                 />
                 <span>Allowed</span>
               </label>
@@ -99,8 +170,8 @@ const Apply = () => {
                   type="radio"
                   name="internshipPermission"
                   value="Permission needed"
-                  checked={formData.internshipPermission === "Permission needed"}
-                  onChange={handleChange}
+                  onChange={(e) => setInternshipPermission(e.target.value)}
+                  required
                 />
                 <span>Permission needed</span>
               </label>
@@ -113,7 +184,6 @@ const Apply = () => {
               id="currentWork"
               name="currentWork"
               type="text"
-              value={formData.currentWork}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -125,7 +195,6 @@ const Apply = () => {
             <textarea
               id="reasonsForInternship"
               name="reasonsForInternship"
-              value={formData.reasonsForInternship}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -137,7 +206,6 @@ const Apply = () => {
             <textarea
               id="longTermGoals"
               name="longTermGoals"
-              value={formData.longTermGoals}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -149,7 +217,6 @@ const Apply = () => {
             <textarea
               id="resonatedPart"
               name="resonatedPart"
-              value={formData.resonatedPart}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -161,7 +228,6 @@ const Apply = () => {
             <textarea
               id="companionshipMeaning"
               name="companionshipMeaning"
-              value={formData.companionshipMeaning}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -173,7 +239,6 @@ const Apply = () => {
             <textarea
               id="excitementAboutFriendships"
               name="excitementAboutFriendships"
-              value={formData.excitementAboutFriendships}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -185,7 +250,6 @@ const Apply = () => {
             <textarea
               id="annoyancesWithOlderPeople"
               name="annoyancesWithOlderPeople"
-              value={formData.annoyancesWithOlderPeople}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -197,7 +261,6 @@ const Apply = () => {
             <select
               id="department"
               name="department"
-              value={formData.department}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -218,7 +281,6 @@ const Apply = () => {
             <textarea
               id="standoutInDepartment"
               name="standoutInDepartment"
-              value={formData.standoutInDepartment}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -230,7 +292,6 @@ const Apply = () => {
             <select
               id="employmentDuration"
               name="employmentDuration"
-              value={formData.employmentDuration}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -248,7 +309,6 @@ const Apply = () => {
               id="stipendExpectations"
               name="stipendExpectations"
               type="number"
-              value={formData.stipendExpectations}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -264,16 +324,7 @@ const Apply = () => {
                     type="checkbox"
                     name="languages"
                     value={language}
-                    checked={formData.languages.includes(language)}
-                    onChange={(e) => {
-                      const { checked, value } = e.target;
-                      setFormData((prevState) => ({
-                        ...prevState,
-                        languages: checked
-                          ? [...prevState.languages, value]
-                          : prevState.languages.filter((lang) => lang !== value),
-                      }));
-                    }}
+                    onChange={onLanguagesChange}
                   />
                   <span>{language}</span>
                 </label>
@@ -283,16 +334,7 @@ const Apply = () => {
                   type="checkbox"
                   name="languages"
                   value="Other"
-                  checked={formData.languages.includes("Other")}
-                  onChange={(e) => {
-                    const { checked, value } = e.target;
-                    setFormData((prevState) => ({
-                      ...prevState,
-                      languages: checked
-                        ? [...prevState.languages, value]
-                        : prevState.languages.filter((lang) => lang !== value),
-                    }));
-                  }}
+                  onChange={onLanguagesChange}
                 />
                 <span>Other</span>
               </label>
@@ -304,7 +346,6 @@ const Apply = () => {
             <select
               id="joinTime"
               name="joinTime"
-              value={formData.joinTime}
               onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
@@ -320,10 +361,10 @@ const Apply = () => {
             <label htmlFor="resume" className="text-lg">Resume</label>
             <input
               id="resume"
-              name="resume"
+              name="file"
               type="file"
               accept=".pdf,.doc,.docx"
-              onChange={handleFileChange}
+              onChange={handleChange}
               className="w-full text-lg p-4 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-[#D4A373]"
               required
             />

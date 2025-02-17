@@ -10,20 +10,20 @@ const About = () => {
         <div className="max-w-7xl mx-auto">
           {/* Heading Section */}
           <div className="text-center">
-            <h1 className="text-4xl font-extrabold text-[#8B4513] mb-6 sm:mb-8">
+            <h1 className="text-4xl font-bold text-[#8B4513] mb-6 sm:mb-8">
               About Golden Guardians
             </h1>
             <p className="text-lg sm:text-xl text-[#A0522D] mb-10 max-w-3xl mx-auto leading-relaxed">
-              Inspired by the GoodFellows initiative by Shantanu Naidu and Ratan Tata, Golden Guardians bridges the generation gap by connecting compassionate volunteers with seniors in need of companionship.
+             Golden Guardians bridges the generation gap by connecting compassionate volunteers with seniors in need of companionship.
             </p>
           </div>
 
           {/* Mission, Community, and Values Section */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 ">
             {cards.map((card, index) => (
               <div
                 key={index}
-                className="bg-white p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                className="bg-[#FFF8EA] p-8 rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
                 <div className="flex justify-center mb-6">
                   {React.cloneElement(card.icon, {

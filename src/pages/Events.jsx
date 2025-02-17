@@ -55,96 +55,74 @@ const Events = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFF8EA]">
+    <div className="flex flex-col min-h-screen bg-[#faedcd]">
+      <div className="px-4 md:px-8 lg:px-16 flex-grow">
       {/* Hero Section */}
-      <div className="bg-[#DEB887] py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#8B4513] mb-4">
-            Join Our Vibrant Community Events
-          </h1>
-          <p className="text-xl text-[#8B4513] max-w-2xl mx-auto">
-            Discover joy, make new friends, and create lasting memories with our carefully curated events designed for your comfort and enjoyment.
-          </p>
-        </div>
+      <div className="text-center py-8 md:py-12">
+        <h1 className="text-3xl md:text-5xl font-bold text-[#8B4513] mb-4">
+          Join Our Vibrant Community Events
+        </h1>
+        <p className="text-lg md:text-xl text-[#A0522D] max-w-3xl mx-auto">
+          Discover joy, make new friends, and create lasting memories with our carefully curated events designed for your comfort and enjoyment.
+        </p>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="bg-[#CCD5AE]shadow-md py-6">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-center space-x-4 overflow-x-auto">
-            {Object.keys(events).map((tab) => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={`px-8 py-3 rounded-full text-lg transition-colors whitespace-nowrap
-                  ${activeTab === tab 
-                    ? 'bg-[#8B4513] text-[#FFF8EA] hover:bg-[#A0522D]' 
-                    : 'bg-[#FFF8EA] text-[#8B4513] hover:bg-[#F5E6D3]'}`}
-              >
-                {tab}
-              </button>
-            ))}
-          </div>
-        </div>
+      <div className="bg-[#CCD5AE] shadow-md py-4 flex justify-center flex-wrap gap-3">
+        {Object.keys(events).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-6 py-2 text-lg rounded-full transition-all ${activeTab === tab 
+              ? 'bg-[#8B4513] text-white' 
+              : 'bg-white text-[#8B4513] border border-[#8B4513]'} hover:bg-[#A0522D] hover:text-white`}
+          >
+            {tab}
+          </button>
+        ))}
       </div>
 
       {/* Event Calendar */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
+      <div className="mt-8">
         <EventCalendar />
       </div>
 
       {/* Event Cards */}
-      <div className="max-w-7xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 gap-8">
-          {events[activeTab].map((event, index) => (
-            <div key={index} className="bg-white rounded-xl shadow-lg overflow-hidden">
-              <div className="grid md:grid-cols-2 gap-6">
-                <img 
-                  src={event.image} 
-                  alt={event.title}
-                  className="w-full h-full object-cover min-h-[300px]"
-                />
-                <div className="p-6 flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-2xl font-bold text-[#8B4513] mb-4">{event.title}</h3>
-                    <p className="text-lg text-[#A0522D] mb-6">{event.description}</p>
-                    <div className="space-y-3">
-                      <div className="flex items-center text-[#8B4513]">
-                        <Calendar className="w-6 h-6 mr-3" />
-                        <span>{event.date}</span>
-                      </div>
-                      <div className="flex items-center text-[#8B4513]">
-                        <Clock className="w-6 h-6 mr-3" />
-                        <span>{event.time}</span>
-                      </div>
-                      <div className="flex items-center text-[#8B4513]">
-                        <MapPin className="w-6 h-6 mr-3" />
-                        <span>{event.location}</span>
-                      </div>
-                      <div className="flex items-center text-[#8B4513]">
-                        <Heart className="w-6 h-6 mr-3" />
-                        <span>{event.participants}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <AccessibleButton 
-                    variant="primary"
-                    size="large"
-                    onClick={() => {}}
-                    className="mt-6"
-                  >
-                    Register Now
-                  </AccessibleButton>
+      <div className="flex flex-col gap-6 py-8">
+        {events[activeTab].map((event, index) => (
+          <div key={index} className="bg-[#fefae0] rounded-2xl shadow-lg overflow-hidden flex flex-col md:flex-row w-full transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+            <img 
+              src={event.image} 
+              alt={event.title}
+              className="w-full md:w-1/2 object-cover min-h-[250px] md:min-h-[300px] rounded-t-2xl md:rounded-l-2xl md:rounded-t-none"
+            />
+            <div className="p-6 flex flex-col justify-between flex-1">
+              <div>
+                <h3 className="text-2xl md:text-3xl font-bold text-[#8B4513] mb-2">{event.title}</h3>
+                <p className="text-md md:text-lg text-[#A0522D] mb-4 leading-relaxed">{event.description}</p>
+                <div className="space-y-2 text-[#8B4513] text-base md:text-lg">
+                  <div className="flex items-center"><Calendar className="w-6 h-6 mr-3" /> {event.date}</div>
+                  <div className="flex items-center"><Clock className="w-6 h-6 mr-3" /> {event.time}</div>
+                  <div className="flex items-center"><MapPin className="w-6 h-6 mr-3" /> {event.location}</div>
+                  <div className="flex items-center"><Heart className="w-6 h-6 mr-3" /> {event.participants}</div>
                 </div>
               </div>
+              <AccessibleButton 
+                variant="primary"
+                size="large"
+                onClick={() => {}}
+                className="mt-6 w-full py-3 text-lg rounded-lg bg-[#8B4513] hover:bg-[#A0522D] text-white font-semibold shadow-md"
+              >
+                Register Now
+              </AccessibleButton>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
+      </div>
       </div>
 
-      
       {/* Footer */}
-      <Footer />
+      <Footer className="mt-auto w-full" />
     </div>
   );
 };

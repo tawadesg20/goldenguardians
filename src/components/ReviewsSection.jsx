@@ -11,19 +11,19 @@ const ReviewsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <ReviewCard
             name="Grendel Denoza"
-            age="19"
+            age="87"
             rating={5}
             type="GrandKid"
           />
           <ReviewCard
             name="Ram Patel"
-            age="20"
+            age="80"
             rating={5}
             type="GrandKid"
           />
           <ReviewCard
             name="Neela"
-            age="18"
+            age="89"
             rating={5}
             type="GrandKid"
           />

@@ -16,7 +16,7 @@ const Contact = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Contact Form */}
-            <div className="bg-white p-8 rounded-lg shadow-md">
+            <div className="bg-[#FFF8EA] p-8 rounded-lg shadow-md">
               <h2 className="text-2xl font-bold text-[#8B4513] mb-6">Get in Touch</h2>
               <form className="space-y-6">
                 <div>
@@ -69,12 +69,12 @@ const Contact = () => {
 
             {/* Contact Information */}
             <div className="space-y-8">
-              <div className="bg-white p-8 rounded-lg shadow-md">
+              <div className="bg-[#FFF8EA] p-8 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-6">Contact Information</h2>
                 <div className="space-y-4">
                   <div className="flex items-center">
                     <Phone className="h-6 w-6 text-[#8B4513] mr-3" />
-                    <span className="text-[#A0522D]">+1 (555) 123-4567</span>
+                    <span className="text-[#A0522D]">+91 7718097415</span>
                   </div>
                   <div className="flex items-center">
                     <Mail className="h-6 w-6 text-[#8B4513] mr-3" />
@@ -89,12 +89,12 @@ const Contact = () => {
                 </div>
               </div>
 
-              <div className="bg-white p-8 rounded-lg shadow-md">
+              <div className="bg-[#FFF8EA] p-8 rounded-lg shadow-md">
                 <h2 className="text-2xl font-bold text-[#8B4513] mb-6">Emergency Support</h2>
                 <p className="text-[#A0522D] mb-4">
                   24/7 Emergency Support Line for registered members:
                 </p>
-                <div className="flex items-center justify-center bg-[#FFF8EA] p-4 rounded-md">
+                <div className="flex items-center justify-center bg-[#FAEDCD] p-4 rounded-md">
                   <Phone className="h-6 w-6 text-[#8B4513] mr-3" />
                   <span className="text-xl font-bold text-[#8B4513]">1-800-GUARDIAN</span>
                 </div>

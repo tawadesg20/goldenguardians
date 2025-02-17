@@ -60,19 +60,19 @@ const Navbar = () => {
     navigate('/login');
   };
 
-  const navLinks = (user.message=="Found" && user.data.skills)?[
+  const navLinks = (user.message=="Found" && user.data)?[
     { path: '/', label: 'Home' },
     { path: '/services', label: 'Services' },
     { path: '/events', label: 'Events' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
-    { path: '/careers', label: 'Careers' },
   ]:[
     { path: '/', label: 'Home' },
     { path: '/services', label: 'Services' },
     { path: '/events', label: 'Events' },
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
+    { path: '/careers', label: 'Careers' },
   ];
 
   const isActivePath = (path) => location.pathname === path;
@@ -150,13 +150,7 @@ const Navbar = () => {
                         <User className="h-4 w-4 mr-2" />
                         Profile
                       </Link>
-                      <Link
-                        to="/settings"
-                        className="flex items-center px-4 py-2 text-sm text-[#8B4513] hover:bg-[#faedcd] transition-colors"
-                      >
-                        <Settings className="h-4 w-4 mr-2" />
-                        Settings
-                      </Link>
+                     
                       <button
                         onClick={handleSignOut}
                         className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
@@ -220,14 +214,7 @@ const Navbar = () => {
                     <User className="h-4 w-4 mr-2" />
                     Profile
                   </Link>
-                  <Link
-                    to="/settings"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center px-3 py-2 text-[#8B4513] hover:bg-[#faedcd] rounded-md transition-colors"
-                  >
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
-                  </Link>
+                  
                   <button
                     onClick={() => {
                       handleSignOut();

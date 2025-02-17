@@ -9,6 +9,7 @@ const SeniorRegistration = () => {
     firstname: '',
     lastname: '',
     email: '',
+    phone: '',
     address: '',
     city: '',
     state: '',
@@ -38,9 +39,9 @@ const SeniorRegistration = () => {
   const [otp, setOtp] = useState("");
 
   const [emergencyContact,setEmergencyContact] =useState({
-    name:"",
-    phone:"",
-    relation:""
+    emergencyContactName:"",
+    emergencyContactPhone:"",
+    emergencyContactRelation:""
   }) 
 
   const [OtpForm,setOtpForm] = useState(false)
@@ -94,9 +95,10 @@ const onEmergencyChange = (event) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // TODO: Implement registration logic
-   let submissionData = {name:"",email:"",dob:"",address:"",emergencycontact:"",interests:"",services:"",city:"",zipcode:"",state:""}
+   let submissionData = {name:"",email:"",phone:"",dob:"",address:"",emergencycontact:"",interests:"",services:"",city:"",zipcode:"",state:""}
     submissionData.name=inputFormData.firstname+" "+inputFormData.lastname;
     submissionData.email=inputFormData.email;
+    submissionData.phone=inputFormData.phone;
     submissionData.dob=inputFormData.dob;
     submissionData.address=inputFormData.address;
     submissionData.emergencycontact=emergencyContact;
@@ -138,7 +140,13 @@ const onEmergencyChange = (event) => {
     navigate("/dashboard")
   })
   .catch((err) => {
-    alert(err.response.data.message)
+    if(err.response.data.message=="email id already exists")
+      {
+        alert("Email already registered, you can login")
+        navigate("/login")
+      }
+      else
+      alert(err.response.data.message)
   });
   };
 
@@ -164,25 +172,33 @@ const onEmergencyChange = (event) => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#faedcd] py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-[#fefae0] rounded-lg shadow-md p-8">
+    <div className="flex flex-col min-h-screen bg-[#faedcd]">
+      {/* Main Content */}
+      <div className="flex-grow py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto bg-[#FFF8EA] rounded-lg shadow-md p-8">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-[#8B4513]">Senior Registration</h2>
             <p className="mt-2 text-[#A0522D]">Start your 30-day free trial today</p>
           </div>
 
           {(OtpForm)?<form onSubmit={handleOtpSubmit}>
-      <div>
-        <label>OTP:</label>
-        <input
-          type="text"
-          name='otp'
-          onChange={e=>setOtp(e.target.value)}
-          required
-        />
-      </div>
-      <button type="submit">Register</button>
+          <div className="flex flex-col items-center space-y-4">
+            <label className="text-lg font-medium text-[#6D3B00]">OTP:</label>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              maxLength="6"
+              placeholder="Enter OTP"
+              className="w-2/3 p-2 border border-[#8B5E34] rounded-lg text-center outline-none focus:ring-2 focus:ring-[#6D3B00]"
+            />
+            <button
+              type="submit"
+              className="bg-[#6D3B00] text-white px-6 py-2 rounded-lg shadow-md hover:bg-[#523000] transition duration-200"
+            >
+              Register
+            </button>
+          </div>
     </form>:<form onSubmit={handleSubmit} className="space-y-6">
             {/* Personal Information */}
             <div className="space-y-4">
@@ -230,7 +246,19 @@ const onEmergencyChange = (event) => {
                     className="mt-1 block w-full rounded-md border-[#DEB887] shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50"
                   />
                 </div>
-        
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-[#8B4513]">
+                    phone
+                  </label>
+                  <input
+                    type="phone"
+                    id="phone"
+                    name='phone'
+                    onChange={onInputChange}
+                    required
+                    className="mt-1 block w-full rounded-md border-[#DEB887] shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50"
+                  />
+                </div>
               </div>
 
               <div>
@@ -319,7 +347,7 @@ const onEmergencyChange = (event) => {
                     type="text"
                     id="emergencyName"
                     onChange={onEmergencyChange}
-                  name='name'
+                  name='emergencyContactName'
                     required
                     className="mt-1 block w-full rounded-md border-[#DEB887] shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50"
                   />
@@ -332,7 +360,7 @@ const onEmergencyChange = (event) => {
                     type="tel"
                     id="emergencyPhone"
                     onChange={onEmergencyChange}
-                  name='phone'
+                  name='emergencyContactPhone'
                     required
                     className="mt-1 block w-full rounded-md border-[#DEB887] shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50"
                   />
@@ -345,7 +373,7 @@ const onEmergencyChange = (event) => {
                     type="text"
                     id="emergencyRelation"
                     onChange={onEmergencyChange}
-                  name='relation'
+                  name='emergencyContactRelation'
                     required
                     className="mt-1 block w-full rounded-md border-[#DEB887] shadow-sm focus:border-[#8B4513] focus:ring focus:ring-[#8B4513] focus:ring-opacity-50"
                   />
