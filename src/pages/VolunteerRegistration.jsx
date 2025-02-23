@@ -107,7 +107,7 @@ const onEmergencyChange = (event) => {
     submissionData.zipcode=inputFormData.zipcode;
     submissionData.state=inputFormData.state;
 
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
       axios({
         method: "post",
         url: API_URL+"/register/volunteer",
@@ -137,7 +137,7 @@ const onEmergencyChange = (event) => {
   const handleOtpSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., API call)
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
     axios({
       method: "post",
       url: API_URL+"/otp-verify/volunteer",

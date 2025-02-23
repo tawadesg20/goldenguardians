@@ -75,7 +75,7 @@ const Dashboard = () => {
   const matchingAlgorithm = async (type) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/${type=="skills" ? "volunteer" : "senior"}/matches`,
+        `https://golden-guardians-backend.onrender.com/${type=="skills" ? "volunteer" : "senior"}/matches`,
         { email: user.data.email }
       );
       console.log(response.data.matches)
@@ -105,7 +105,7 @@ const Dashboard = () => {
     const userData = Cookies.get("user");
     if (userData && JSON.parse(userData).skills) {
       let user = JSON.parse(userData)
-      axios.get(`http://localhost:5000/volunteer/${user.email}`).then(response=>{
+      axios.get(`https://golden-guardians-backend.onrender.com/volunteer/${user.email}`).then(response=>{
         if(response.data.volunteer)
         {
           if(response.data.volunteer.senior.email)
@@ -118,7 +118,7 @@ const Dashboard = () => {
       setSenior(JSON.parse(userData).senior?JSON.parse(userData).senior:{})
     } else if (userData) {
       let user = JSON.parse(userData)
-      axios.get(`http://localhost:5000/senior/${user.email}`).then(response=>{
+      axios.get(`https://golden-guardians-backend.onrender.com/senior/${user.email}`).then(response=>{
         if(response.data.senior)
         {
           if(response.data.senior.volunteer.email)
@@ -146,7 +146,7 @@ const Dashboard = () => {
   const requestSenior = async (senior) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/volunteer/volunteer/connect`,
+        `https://golden-guardians-backend.onrender.com/volunteer/volunteer/connect`,
         { volunteerEmail: user.data.email,seniorEmail:senior.email }
       );
       console.log(response.data)

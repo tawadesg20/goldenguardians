@@ -31,7 +31,7 @@ const Profile = () => {
       let user = JSON.parse(userData);
      if(user.skills)
      {
-      axios.get(`http://localhost:5000/volunteer/${user.email}`).then(response=>
+      axios.get(`https://golden-guardians-backend.onrender.com/volunteer/${user.email}`).then(response=>
         {
           user = response.data.volunteer;
           setProfileData({name:user.name,email:user.email,address:user.address,city:user.city,state:user.state,zipcode:user.zipcode,skills:user.skills.toString(),hobbies:user.hobbies?user.hobbies:"",certification:user.certification?user.certification:"",experience:user.experience,file:null,filename:user.application.resume.filename});
@@ -40,7 +40,7 @@ const Profile = () => {
      }
      if(user.interests)
      {
-      axios.get(`http://localhost:5000/senior/${user.email}`).then(response=>
+      axios.get(`https://golden-guardians-backend.onrender.com/senior/${user.email}`).then(response=>
         {
           user = response.data.senior;
           setProfileData({name:user.name,email:user.email,address:user.address,city:user.city,state:user.state,zipcode:user.zipcode,interests:user.interests.toString(),ename:user.emergencycontact.emergencyContactName,ephone:user.emergencycontact.emergencyContactPhone,erelation:user.emergencycontact.emergencyContactRelation,specialneeds:user.specialneeds});
@@ -79,7 +79,7 @@ const Profile = () => {
     if(profileData.file)
     data.append("file",profileData.file);
 
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
     console.log(...data.entries())
     axios({
       method: "POST",

@@ -21,7 +21,7 @@ const Contact = () => {
       if(contact.file)
       data.append("file",contact.file);
   
-      const API_URL = "http://localhost:5000/sendemail";
+      const API_URL = "https://golden-guardians-backend.onrender.com/sendemail";
       console.log(...data.entries())
       axios({
         method: "POST",

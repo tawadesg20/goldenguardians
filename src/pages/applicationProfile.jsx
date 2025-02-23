@@ -14,7 +14,7 @@ const ApplicationProfile = () => {
     useEffect(()=>{
          const adminkey = Cookies.get("adminkey");
        
-         const API_URL = "http://localhost:5000";
+         const API_URL = "https://golden-guardians-backend.onrender.com";
       axios({
         method: "post",
         url: API_URL+`/${adminkey}/application`,
