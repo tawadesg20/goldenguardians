@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -57,7 +58,7 @@ const formatTime = (time) => {
 };
 
 const Dashboard = () => {
-  const [user, setUser] = useState({ message: "Searching" });
+  const [user, setUser] = useState({ message: "Searching",data:{} });
   const [request,setRequested] = useState(false);
   const [senior,setSenior] = useState({});
   const [volunteer,setVolunteer] = useState({})
@@ -71,12 +72,13 @@ const Dashboard = () => {
   });
 
 
-  const matchingAlgorithm = async (skills) => {
+  const matchingAlgorithm = async (type) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/${skills ? "volunteer" : "senior"}/matches`,
+        `http://localhost:5000/${type=="skills" ? "volunteer" : "senior"}/matches`,
         { email: user.data.email }
       );
+      console.log(response.data.matches)
       setMatches(response.data.matches);
     } catch (err) {
       console.error("Error fetching matches:", err);
@@ -87,7 +89,10 @@ const Dashboard = () => {
     if (user.message !== "Searching") {
       const userData = JSON.parse(Cookies.get("user") || "{}");
       const fetchData = async () => {
-        await matchingAlgorithm(userData.skills);
+        if(userData.skills)
+        await matchingAlgorithm("skills");
+        if(userData.interests)
+          await matchingAlgorithm("interests")
       };
 
       fetchData();
@@ -192,7 +197,7 @@ const Dashboard = () => {
               <Award className="h-6 w-6 text-[#8B4513]" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-[#8B4513]">{(user.data)?user.data.skills?user.data.skills.length:user.data.interests.length:0}</h3>
+              <h3 className="text-2xl font-bold text-[#8B4513]">{(user.data && user.data.skills)?user.data.skills.length:(user.data && user.data.interests)?user.data.interests.length:0}</h3>
               <p className="text-[#A0522D]">Skills Offered</p>
             </div>
           </div>
@@ -263,6 +268,20 @@ const Dashboard = () => {
                   <p className="text-sm text-[#A0522D]">{(senior.dateTime)?timeAgo(senior.dateTime):"Just now"}</p>
                 </div>:null
                 }
+                {(volunteer.task)?<div className="border-b border-[#DEB887] pb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-[#8B4513] font-medium">task assigned by admin: {volunteer.task}</p>
+                    <span className={`px-2 py-1 rounded text-xs font-medium ${
+                      // notification.priority === 'high' ? 'bg-red-100 text-red-800' :
+                      // notification.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
+                      'bg-green-100 text-green-800'
+                    }`}>
+                      High
+                    </span>
+                  </div>
+                  <p className="text-sm text-[#A0522D]">{(senior.dateTime)?timeAgo(senior.dateTime):"Just now"}</p>
+                </div>:null
+                }
                 {(senior.email || volunteer.email)?<div className="border-b border-[#DEB887] pb-4">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-[#8B4513] font-medium">Your {senior.email?"Senior":"Volunteer"}:{senior.email?senior.email:volunteer.email} {(senior.status=="Assigned")?"Approved"+" by admin":senior.status}</p>
@@ -292,10 +311,10 @@ const Dashboard = () => {
                 <Calendar className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Schedule</span>
               </button> */}
-              <a href="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
+              <Link href="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
                 <User className="h-6 w-6 text-[#8B4513] mb-2" />
                 <button className="text-sm font-medium text-[#8B4513]">Profile</button>
-              </a>
+              </Link>
               {/* <button className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
                 <Settings className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Call</span>
@@ -305,7 +324,31 @@ const Dashboard = () => {
         </div>
 
         {/* Matches Section */}
-       {(senior.email)?<div></div>: <div className="mt-8">
+        {(user.data.interests)?  <div className="mt-8">
+          <h2 className="text-2xl font-semibold text-[#8B4513] mb-4">Your Matches</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {matches.length === 0 ? (
+              <div className="bg-[#FFF8EA] p-6 rounded-lg shadow-md">
+                <p className="text-[#A0522D] text-center">No matches found yet. We'll notify you when we find someone!</p>
+              </div>
+            ) : (
+              matches.map((match, id) => (
+                <div key={id} className="bg-[#FFF8EA] p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
+                  <div className="flex items-center mb-4">
+                    <div className="rounded-full bg-[#FFF8EA] p-3 mr-4">
+                      <User className="h-6 w-6 text-[#8B4513]" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-[#8B4513]">{match.name}</h3>
+                      <p className="text-sm text-[#A0522D]">{match.email}</p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+        </div>:null}
+        {(!senior.email && user.data.skills)? <div className="mt-8">
           <h2 className="text-2xl font-semibold text-[#8B4513] mb-4">Your Matches</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {matches.length === 0 ? (
@@ -331,7 +374,7 @@ const Dashboard = () => {
               ))
             )}
           </div>
-        </div>}
+        </div>:null}
       </div>
     </div>
     </>

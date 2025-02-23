@@ -26,7 +26,7 @@ export default function AdminDashboard() {
     setAdminKey( Cookies.get("adminkey"))
     if(adminKey){
       setInterval(()=>{
-        axios.get(`http://localhost:5000/${adminKey}/volunteers`).then((response) => {
+        axios.get(`https://golden-guardians-backend.onrender.com/${adminKey}/volunteers`).then((response) => {
           let volunteers = response.data.volunteers;
           volunteers = volunteers.filter(volunteer=>volunteer.senior?(volunteer.senior.email && volunteer.senior.status=="Requested"):false)
           setVolunteerRequested(volunteers)
@@ -50,7 +50,7 @@ export default function AdminDashboard() {
 
   const handleApprove = (id) => {
     const adminkey = Cookies.get("adminkey");
-    const API_URL = `http://localhost:5000/${adminkey}/approve-application`;
+    const API_URL = `https://golden-guardians-backend.onrender.com/${adminkey}/approve-application`;
     axios({
       method: "PUT",
       url: API_URL,
@@ -68,7 +68,7 @@ export default function AdminDashboard() {
 
   const handleReject = (id) => {
     const adminkey = Cookies.get("adminkey");
-    const API_URL = `http://localhost:5000/${adminkey}/reject-application`;
+    const API_URL = `https://golden-guardians-backend.onrender.com/${adminkey}/reject-application`;
     axios({
       method: "PUT",
       url: API_URL,
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
   };
   const viewProfile = (id) => {
     const adminkey = Cookies.get("adminkey");
-    const API_URL = `http://localhost:5000/${adminkey}/application`;
+    const API_URL = `https://golden-guardians-backend.onrender.com/${adminkey}/application`;
     navigate(`/admin/profile?email=${id}`)
   };
 
@@ -97,7 +97,7 @@ export default function AdminDashboard() {
     {
       const adminkey = Cookies.get("adminkey");
       setInterval(()=>{
-        const API_URL = `http://localhost:5000/${adminkey}/applications`;
+        const API_URL = `https://golden-guardians-backend.onrender.com/${adminkey}/applications`;
       axios.get(API_URL)
     .then((response) => {
       let applications = response.data.applications
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
 
   const handleSubmitAdmin = (e) => {
     e.preventDefault();
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
       axios({
         method: "post",
         url: API_URL+"/admin",
@@ -155,7 +155,7 @@ export default function AdminDashboard() {
 
   const onTaskSubmit = (vemail,semail,city) => {
     console.log(vemail,semail,city,task,date,startTime,endTime)
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
     axios({
       method: "post",
       url: API_URL+`/${adminKey}/volunteer/assignTask`,
@@ -169,28 +169,63 @@ export default function AdminDashboard() {
     alert(err.response.data.message)
   });
   }
-
-  if(!adminkeyCorrect)
-  return <div>
-    <form className="mx-96" onSubmit={handleSubmitAdmin}>
-      <input type="password" placeholder="admin key" name="adminkey" id="adminkey" onChange={handleChange} required/><br/><br/>
-      <button type="submit" className="bg-red-200 text-white p-2 rounded-full">Submit</button>
-      <button onClick={goBack}>Go back</button>
-    </form>
-  </div>
+//Admin sign in page
+  if (!adminkeyCorrect)
+    return (
+      <div className="flex justify-center items-center h-screen bg-[#fefae0] text-[#5C3D2E]">
+        <form
+          className="bg-[#FAEDCD]  shadow-lg rounded-lg p-8 w-96"
+          onSubmit={handleSubmitAdmin}
+        >
+          <h2 className="text-xl font-semibold text-[#8B4513] text-center mb-4">
+            Admin Access
+          </h2>
+          <input
+            type="password"
+            placeholder="Enter Admin Key"
+            name="adminkey"
+            id="adminkey"
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-[#8B5E34] rounded-md focus:outline-none focus:ring-[#8B4513] focus:ring-opacity-50"
+          />
+          <div className="mt-6 flex justify-between">
+            <button
+              type="submit"
+              className="w-1/2 bg-[#8B4513]  text-white p-3 rounded-md hover:bg-[#6D3B00]  transition"
+            >
+              Submit
+            </button>
+            <button
+              onClick={goBack}
+              type="button"
+              className="w-1/3 bg-[#8B4513]  text-white p-3 rounded-md hover:bg-[#6D3B00]  transition"
+            >
+              Go Back
+            </button>
+          </div>
+        </form>
+      </div>
+    );
+  //admin dashboard after sign
   if(adminkeyCorrect)
   return (
     <div className="min-h-screen bg-[#faedcd] p-6">
-      <button onClick={signOut}>signOut</button>
       {/* Top Bar */}
-      <div className="flex justify-between items-center bg-[#8B4513] text-white p-4 rounded-lg">
-        <h1 className="text-xl font-bold">Golden Guardians Admin Dashboard</h1>
-        <div className="flex space-x-4">
-          <div className="h-5 w-5 cursor-pointer" ></div>
-          <div className="h-5 w-5 cursor-pointer" ></div>
-          <div className="h-5 w-5 cursor-pointer" ></div>
-        </div>
-      </div>
+  <div className="flex justify-between items-center bg-[#8B4513] text-white p-4 rounded-lg">
+    <h1 className="text-xl font-bold">Golden Guardians Admin Dashboard</h1>
+    <div className="flex space-x-4 items-center">
+      <div className="h-5 w-5 cursor-pointer"></div>
+      <div className="h-5 w-5 cursor-pointer"></div>
+      <div className="h-5 w-5 cursor-pointer"></div>
+      <button 
+        onClick={signOut} 
+        className="bg-[#8B4513] hover:bg-[#6D3B00]-700 text-white px-4 py-2 rounded-lg text-sm font-semibold"
+      >
+        Sign Out
+      </button>
+    </div>
+  </div>
 
       {/* Main Content */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -200,7 +235,6 @@ export default function AdminDashboard() {
             <div className="text-[#8B4513]">Pending Volunteer Applications</div>
           </div>
           <div>
-           
                {(pendingVolunteers.length>0)? pendingVolunteers.map((application,index)=>(
                 <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
                 <div>
@@ -228,7 +262,6 @@ export default function AdminDashboard() {
             <div className="text-[#8B4513]">Accepted Volunteer Applications</div>
           </div>
           <div>
-           
                {(acceptedApplications.length>0)? acceptedApplications.map((application,index)=>(
                 <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
                 <div>
@@ -240,13 +273,12 @@ export default function AdminDashboard() {
                )):<p className="text-center text-[#8B4513]">No Accepted applications.</p>}
           </div>
         </div>
-{/* Volunteer Rejected Applications */}
-<div className="bg-white shadow-lg rounded-xl p-4">
+        {/* Volunteer Rejected Applications */}
+        <div className="bg-white shadow-lg rounded-xl p-4">
           <div>
             <div className="text-[#8B4513]">Rejected Volunteer Applications</div>
           </div>
-          <div>
-           
+        <div>
                {(rejectedApplicatoins.length>0)? rejectedApplicatoins.map((application,index)=>(
                 <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
                 <div>
@@ -258,47 +290,74 @@ export default function AdminDashboard() {
                )):<p className="text-center text-[#8B4513]">No Rejected applications.</p>}
           </div>
         </div>
-{/* Volunteer Requested Senior */}
-<div className="bg-white shadow-lg rounded-xl p-4">
-          <div>
-            <div className="text-[#8B4513]">Volunteer Requested Seniors</div>
-          </div>
-          <div>
-           
-               {(volunteerRequested.length>0)? volunteerRequested.map((volunteer,index)=>(
-                <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
-                <div>
-                  <p className="font-bold text-[#8B4513]">Volunteer Name: {volunteer.application.data.fullName}</p>
-                  <p className="font-bold text-[#8B4513]">Volunteer Email: {volunteer.email}</p>
-                  <p className="text-sm">Skills: {(volunteer.skills.length>0)?volunteer.skills.join(","):"Not mentioned"}</p>
-                  <p className="font-bold text-[#8B4513]">Senior Email: {volunteer.senior.email}</p>
-                  <form action="">
-                    <input type="text" placeholder="Enter Task" onChange={onTaskChange} /><br />
-                    <input type="date" name="date" onChange={(e) => setDate(e.target.value)} required />
-                    <label className="block">
-        Select Start Time:
-        <input
-          type="time"
-          onChange={(e) => setStartTime(e.target.value)}
-          className="border p-2 rounded"
-        />
-      </label>
-      <label className="block">
-        Select End:
-        <input
-          type="time"
-          onChange={(e) => setEndTime(e.target.value)}
-          className="border p-2 rounded"
-        />
-      </label>
-                  </form>
-                  <button onClick={()=>{onTaskSubmit(volunteer.email,volunteer.senior.email,volunteer.city)}} className="bg-red-200 px-10 py-2 rounded-full">Assign Task</button>
-                </div>
-                
-              </div>
-               )):<p className="text-center text-[#8B4513]">No Requested applications.</p>}
-          </div>
+        {/* Volunteer Requested Senior */}
+        <div className="bg-white shadow-lg rounded-xl p-6">
+      <h2 className="text-[#8B4513] font-bold text-lg mb-4">Volunteer Requested Seniors</h2>
+
+    {(volunteerRequested.length > 0) ? (
+      volunteerRequested.map((volunteer, index) => (
+        <div key={index} className="bg-[#faedcd] p-5 rounded-lg mb-4 shadow-md">
+          <p className="font-bold text-[#8B4513] text-md">
+            Volunteer Name: <span className="text-black">{volunteer.application.data.fullName}</span>
+          </p>
+          <p className="font-bold text-[#8B4513] text-md">
+            Volunteer Email: <span className="text-black">{volunteer.email}</span>
+          </p>
+          <p className="text-sm text-black">Skills: {volunteer.skills.length > 0 ? volunteer.skills.join(", ") : "Not mentioned"}</p>
+          <p className="font-bold text-[#8B4513] text-md">
+            Senior Email: <span className="text-black">{volunteer.senior.email}</span>
+          </p>
+
+          <form className="mt-3 space-y-3">
+            <input 
+              type="text" 
+              placeholder="Enter Task" 
+              onChange={onTaskChange} 
+              className="w-full p-2 border border-[#8B4513] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            />
+
+            <input 
+              type="date" 
+              name="date" 
+              onChange={(e) => setDate(e.target.value)} 
+              required 
+              className="w-full p-2 border border-[#8B4513] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+            />
+
+            <div className="flex flex-col sm:flex-row sm:space-x-4">
+              <label className="flex-1">
+                <span className="block text-[#8B4513] font-medium mb-1">Select Start Time:</span>
+                <input
+                  type="time"
+                  onChange={(e) => setStartTime(e.target.value)}
+                  className="w-full p-2 border border-[#8B4513] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                />
+              </label>
+
+              <label className="flex-1">
+                <span className="block text-[#8B4513] font-medium mb-1">Select End Time:</span>
+                <input
+                  type="time"
+                  onChange={(e) => setEndTime(e.target.value)}
+                  className="w-full p-2 border border-[#8B4513] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8B4513]"
+                />
+              </label>
+            </div>
+          </form>
+
+          <button 
+            onClick={() => { onTaskSubmit(volunteer.email, volunteer.senior.email, volunteer.city) }} 
+            className="bg-[#8B4513] text-white px-6 py-2 rounded-full font-semibold mt-4 hover:bg-[#5A2D0C] transition duration-300"
+          >
+            Assign Task
+          </button>
         </div>
+      ))
+       ) : (
+      <p className="text-center text-[#8B4513] font-medium">No Requested applications.</p>
+       )}
+      </div>
+
         {/* Task Assignments & Location */}
         <div className="bg-white shadow-lg rounded-xl p-4">
           <div>
@@ -310,7 +369,7 @@ export default function AdminDashboard() {
                 <div key={index} className="bg-[#faedcd] p-3 rounded-lg mb-2">
                   <p className="font-bold text-[#8B4513]">Volunteer Email: {volunteer.email}</p>
                   <p className="text-sm">Task: {volunteer.senior.task}</p>
-                  <div className="text-sm flex items-center"><p className="h-4 w-4 mr-1" ></p> Location: {volunteer.city}</div>
+                  <div className="text-sm flex items-center">Location: {volunteer.city}</div>
                 </div>
               ))
             ) : (
