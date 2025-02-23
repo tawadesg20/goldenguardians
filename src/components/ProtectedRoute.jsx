@@ -1,30 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
-
+import { useNavigate } from "react-router-dom";
 
 const ProtectedRoute = ({ children }) => {
-  const [user, setUser] = useState({message:"Searching"});
-
+  const [user, setUser] = useState({ message: "Searching", type: null, data: null });
+  const navigate = useNavigate()
   useEffect(() => {
-    const userData = Cookies.get("user");
-    if (userData) {
-      setUser({message:"Found",data:JSON.parse(userData)}); // Parse the stringified object
-    }
-    else
-    setUser({message:"Not Found"})
+    let userr = Cookies.get("user");
+    const adminKey = Cookies.get("adminkey");
 
+    if (adminKey) {
+      setUser({ message: "Found", type: "admin" });
+    } else if (userr) {
+      userr = JSON.parse(userr);
+      if (userr.skills) {
+        setUser({ message: "Found", type: "volunteer", data: userr });
+      } else {
+        setUser({ message: "Found", type: "senior", data: userr });
+      }
+    } else {
+      setUser({ message: "Not Found" });
+    }
   }, []);
-  if (user.message!="Searching" && user.message=="Not Found") {
-    // If user is not authenticated, redirect to login
+
+  // Redirects should be handled inside JSX using `<Navigate />`
+  if (user.message == "Found") {
+    if (user.type == "admin") {
+      return <Navigate to="/admin" replace />;
+    }
+    if (user.type == "volunteer" || user.type == "senior") {
+      return children;
+    }
+  }
+  
+  if (user.message == "Not Found") {
     return <Navigate to="/login" replace />;
   }
-
-  // If user is authenticated, render the child component
-  if(user.message!="Searching" && user.message=="Found")
-  return children;
-  else
-  return <div>Loading</div>
+  if (user.message == "Searching") {
+    return <div>Loading...</div>; // or a proper loading spinner
+  }
+  
 };
 
 export default ProtectedRoute;

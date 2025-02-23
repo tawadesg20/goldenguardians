@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, User, LogOut, Settings, Bell, ChevronDown } from 'lucide-react';
-import { useUser } from './UserContext';
 import Logo from './Logo';
 import Cookies from "js-cookie";
 
@@ -13,12 +12,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const profileRef = useRef(null);
-
   // Close profile dropdown when clicking outside
   useEffect(() => {
-
-   
-
         const  checkUser = () =>{
             const userData = Cookies.get("user");
           if (userData) {
@@ -73,6 +68,7 @@ const Navbar = () => {
     { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
     { path: '/careers', label: 'Careers' },
+    { path: '/admin', label: 'Admin' },
   ];
 
   const isActivePath = (path) => location.pathname === path;
@@ -114,7 +110,6 @@ const Navbar = () => {
                     className="p-2 hover:bg-[#faedcd] rounded-full transition-colors relative"
                     aria-label="Notifications"
                   >
-                    <Bell className="h-5 w-5 text-[#8B4513]" />
                     {notifications.length > 0 && (
                       <span className="absolute top-0 right-0 h-4 w-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center">
                         {notifications.length}

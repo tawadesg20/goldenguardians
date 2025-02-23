@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import FeaturesSection from '../components/FeaturesSection.jsx';
 import ReviewsSection from '../components/ReviewsSection.jsx';
 import Footer from '../components/Footer.jsx';
+import Navbar from '../components/Navbar.jsx';
 
 const Home = () => {
  const [user, setUser] = useState({message:"Searching"});
@@ -24,6 +25,7 @@ const Home = () => {
         }
 
   return (
+    <><Navbar />
     <div className="min-h-screen bg-[#faedcd]">
       {/* Hero Section */}
       <div className="relative py-16 px-6 sm:px-12 lg:px-16">
@@ -63,7 +65,7 @@ const Home = () => {
 
       {/* Footer */}
       <Footer />
-    </div>
+    </div></>
   );
 };
 

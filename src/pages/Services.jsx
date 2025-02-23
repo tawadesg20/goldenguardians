@@ -1,9 +1,12 @@
 import React from "react";
 import { Coffee, Book, Music, HeartHandshake, Footprints, Gamepad2 } from "lucide-react";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const Services = () => {
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen flex flex-col bg-[#FAEDCD] text-[#5C3D2E]">
       {/* Main Content */}
       <div className="flex-grow py-16 px-6 sm:px-10 lg:px-20">
@@ -38,6 +41,7 @@ const Services = () => {
       {/* Footer */}
       <Footer />
     </div>
+    </>
   );
 };
 

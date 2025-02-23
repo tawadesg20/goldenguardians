@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie"
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 import axios from 'axios';
 
 const VolunteerRegistration = () => {
@@ -170,6 +171,8 @@ const onEmergencyChange = (event) => {
   ];
 
   return (
+    <>
+    <Navbar />
     <div className="flex flex-col min-h-screen bg-[#faedcd]">
       {/* Main Content */}
       <div className="flex-grow py-12 px-4 sm:px-6 lg:px-8">
@@ -309,8 +312,8 @@ const onEmergencyChange = (event) => {
                   </label>
                   <input
                     type="text"
-                    id="zipCode"
-                    name="zipCode"
+                    id="zipcode"
+                    name="zipcode"
                     onChange={onInputChange}
                     required
                     className="mt-1 block w-full rounded-md border-[#c3d0e8] shadow-sm focus:border-[#1c3a5b] focus:ring focus:ring-[#1c3a5b] focus:ring-opacity-50"
@@ -436,6 +439,7 @@ const onEmergencyChange = (event) => {
       </div>
       <Footer/>
     </div>
+    </>
   );
 };
 

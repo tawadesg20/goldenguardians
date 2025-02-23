@@ -3,8 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
-const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+function isValidEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", loginotp: "" });
@@ -16,10 +20,15 @@ const Login = () => {
   const [apiLink, setApiLink] = useState(`http://localhost:5000/login/senior`);
   const navigate = useNavigate();
 
+
   useEffect(() => {
     const userData = Cookies.get("user");
+    const adminKey = Cookies.get("adminkey")
     if (userData) {
       navigate("/dashboard");
+    }
+    if(adminKey){
+      navigate("/admin");
     }
   }, [navigate]);
 
@@ -74,6 +83,7 @@ const Login = () => {
   };
 
   return (
+    <><Navbar />
     <div className="min-h-screen flex flex-col bg-[#faedcd]">
       <div className="flex-grow flex items-center justify-center p-4">
         <div className="w-full max-w-md">
@@ -125,7 +135,7 @@ const Login = () => {
         </div>
       </div>
       <Footer />
-    </div>
+    </div></>
   );
 };
 
