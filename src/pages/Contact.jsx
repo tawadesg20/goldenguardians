@@ -1,9 +1,11 @@
 import React from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const Contact = () => {
   return (
+    <><Navbar />
     <div className="min-h-screen bg-[#faedcd] flex flex-col justify-between">
       <div className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -107,6 +109,7 @@ const Contact = () => {
       {/* Footer */}
       <Footer />
     </div>
+    </>
   );
 };
 

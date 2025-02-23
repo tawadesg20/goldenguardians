@@ -3,8 +3,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
-const isValidEmail = (email) => /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+function isValidEmail(email) {
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  return emailRegex.test(email);
+}
 
 const Login = () => {
   const [user, setUser] = useState({ email: "", loginotp: "" });
@@ -13,13 +17,18 @@ const Login = () => {
   const [status, setStatus] = useState("nothing");
   const [validEmail, setValidEmail] = useState(false);
   const [enteredOtp, setEnteredOtp] = useState(false);
-  const [apiLink, setApiLink] = useState(`http://localhost:5000/login/senior`);
+  const [apiLink, setApiLink] = useState(`https://golden-guardians-backend.onrender.com/login/senior`);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     const userData = Cookies.get("user");
+    const adminKey = Cookies.get("adminkey")
     if (userData) {
       navigate("/dashboard");
+    }
+    if(adminKey){
+      navigate("/admin");
     }
   }, [navigate]);
 
@@ -31,15 +40,15 @@ const Login = () => {
     }));
     setValidEmail(isValidEmail(user.email));
     setEnteredOtp(user.loginotp.length > 1);
-    setApiLink(userType === "senior" ? "http://localhost:5000/login/senior" : "http://localhost:5000/login/volunteer");
+    setApiLink(userType === "senior" ? "https://golden-guardians-backend.onrender.com/login/senior" : "https://golden-guardians-backend.onrender.com/login/volunteer");
   };
 
   const handlSubmitEmail = (e) => {
     e.preventDefault();
-    axios.post(`http://localhost:5000/login/${userType}`, user)
+    axios.post(`https://golden-guardians-backend.onrender.com/login/${userType}`, user)
       .then((response) => {
         alert(response.data.message);
-        setApiLink(userType === "senior" ? "http://localhost:5000/login/otp-verify/senior" : "http://localhost:5000/login/otp-verify/volunteer");
+        setApiLink(userType === "senior" ? "https://golden-guardians-backend.onrender.com/login/otp-verify/senior" : "https://golden-guardians-backend.onrender.com/login/otp-verify/volunteer");
         setStatus("sent");
         setClickedOtp(true);
       })
@@ -62,7 +71,7 @@ const Login = () => {
   const handlSubmitOtp = (e) => {
     e.preventDefault();
     setStatus("verifying");
-    axios.post(`http://localhost:5000/login/otp-verify/${userType}`, user)
+    axios.post(`https://golden-guardians-backend.onrender.com/login/otp-verify/${userType}`, user)
       .then((response) => {
         alert(response.data.message);
         Cookies.set("user", JSON.stringify(response.data.user));
@@ -74,6 +83,7 @@ const Login = () => {
   };
 
   return (
+    <><Navbar />
     <div className="min-h-screen flex flex-col bg-[#faedcd]">
       <div className="flex-grow flex items-center justify-center p-4">
         <div className="w-full max-w-md">
@@ -125,7 +135,7 @@ const Login = () => {
         </div>
       </div>
       <Footer />
-    </div>
+    </div></>
   );
 };
 

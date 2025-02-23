@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import Footer from '../components/Footer';
 import Cookies from "js-cookie";
+import Navbar from '../components/Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -109,7 +110,7 @@ const onEmergencyChange = (event) => {
     submissionData.state=inputFormData.state;
     console.log(submissionData)
 
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
       axios({
         method: "post",
         url: API_URL+"/register/senior",
@@ -128,7 +129,7 @@ const onEmergencyChange = (event) => {
   const handleOtpSubmit = (e) => {
     e.preventDefault();
     // Handle form submission (e.g., API call)
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
     axios({
       method: "post",
       url: API_URL+"/otp-verify/senior",
@@ -172,6 +173,8 @@ const onEmergencyChange = (event) => {
   ];
 
   return (
+    <>
+    <Navbar />
     <div className="flex flex-col min-h-screen bg-[#faedcd]">
       {/* Main Content */}
       <div className="flex-grow py-12 px-4 sm:px-6 lg:px-8">
@@ -456,6 +459,7 @@ const onEmergencyChange = (event) => {
       </div>
       <Footer/>
     </div>
+    </>
   );
 };
 

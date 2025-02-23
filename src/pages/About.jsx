@@ -1,9 +1,12 @@
 import React from 'react';
 import { Award, Heart, Users } from 'lucide-react';
 import Footer from '../components/Footer';
+import Navbar from '../components/Navbar';
 
 const About = () => {
   return (
+    <>
+    <Navbar />
     <div className="min-h-screen flex flex-col bg-[#faedcd]">
       {/* Main Content */}
       <div className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
@@ -45,6 +48,7 @@ const About = () => {
       {/* Footer */}
       <Footer />
     </div>
+    </>
   );
 };
 

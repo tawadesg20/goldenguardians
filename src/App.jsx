@@ -20,24 +20,16 @@ import Apply from "./pages/Apply.jsx";
 import Careers from "./pages/Careers.jsx";
 import Profile from "./pages/Profile.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import AdminDashboard from "./pages/AdminDashboard.jsx";
+import ApplicationProfile from "./pages/applicationProfile.jsx";
 
 
 const App = () => {
-  const [data, setData] = useState("");
-
-  const getData = async () => {
-    const response = await Axios.get("https://localhost:5000/getData");
-    setData(response.data);
-  }
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <PaymentProvider>
       <UserProvider>
         <Router>
           <div className="min-h-screen bg-[#faedcd]">
-            <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
@@ -53,8 +45,8 @@ const App = () => {
               <Route path="/events" element={<Events />} />
               <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-             
-              
+              <Route path="/admin" element={<AdminDashboard/>} />
+              <Route path="/admin/profile" element={<ApplicationProfile />} />
             </Routes>
           </div>
         </Router>

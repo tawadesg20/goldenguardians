@@ -3,6 +3,7 @@ import { Navigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import Footer from '../components/Footer';
 import { Link } from 'react-router-dom';
+import Navbar from "../components/Navbar";
 
 const Careers = () => {
   const [user, setUser] = useState({ message: "Searching" });
@@ -27,6 +28,7 @@ const Careers = () => {
     return <Navigate to="/dashboard" replace />;
   else {
     return (
+      <><Navbar />
       <div className="min-h-screen flex flex-col bg-[#FAEDCD]">
         {/* Main Content */}
         <div className="flex-grow flex items-center justify-center p-6">
@@ -81,7 +83,7 @@ const Careers = () => {
 
         {/* Footer */}
         <Footer />
-      </div>
+      </div></>
     );
   }
 };

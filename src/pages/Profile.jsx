@@ -1,94 +1,117 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import { Edit } from 'lucide-react';
 
 const Profile = () => {
-  const [profileData, setProfileData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    streetAddress: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    skills: [],
-    hobbies: '',
-    certifications: '',
-    availability: [],
-    experience: '',
-    emergencyContact: { name: '', phone: '', relationship: '' },
-    standoutDetails: '',
-    cv: null,
-  });
+   const [profileData, setProfileData] = useState({
+     name: "",
+     email:"",
+     address: "",
+     city: "",
+     state: "",
+     zipcode: "",
+     skills: "",
+     hobbies: "",
+     certification:"",
+     experience:"",
+     file: null,
+   });
 
   useEffect(() => {
     const userData = Cookies.get('user');
     if (userData) {
-      setProfileData(JSON.parse(userData));
+      let user = JSON.parse(userData);
+      axios.get(`https://golden-guardians-backend.onrender.com/volunteer/${user.email}`).then(response=>
+      {
+        user = response.data.volunteer;
+        setProfileData({name:user.name,email:user.email,address:user.address,city:user.city,state:user.state,zipcode:user.zipcode,skills:user.skills.toString(),hobbies:user.hobbies?user.hobbies:"",certification:user.certification?user.certification:"",experience:user.experience,file:null,filename:user.application.resume.filename});
+      }
+      ).catch(err=>alert(err.response.message))
     }
   }, []);
 
+  
+
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setProfileData({ ...profileData, [name]: value });
+    const { name, type, files, value } = e.target;
+    setProfileData({ ...profileData, [name]: type == "file" ? files[0] : value });
+    console.log("")
   };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(profileData.skills)
+    const data = new FormData();
+     data.append("name", profileData.name);
+    data.append("email", profileData.email);
+    data.append("address", profileData.address);
+    data.append("city", profileData.city);
+    data.append("state", profileData.state);
+    data.append("zipcode", profileData.zipcode);
+    data.append("skills", profileData.skills.split(","));
+    data.append("hobbies",  profileData.hobbies);
+    data.append("certification", profileData.certification);
+    data.append("experience", profileData.experience);
+    if(profileData.file)
+    data.append("file",profileData.file);
 
-  const handleFileChange = (e) => {
-    setProfileData({ ...profileData, cv: e.target.files[0] });
-  };
+    const API_URL = "https://golden-guardians-backend.onrender.com";
+    console.log(...data.entries())
+    axios({
+      method: "POST",
+      url: API_URL+`/volunteer/${profileData.email}`,
+      data:data,
+  })
+  .then((response) => {
+    alert(response.data.message)
+  })
+  .catch((err) => {
+      alert(err.response.data.message)
+  });
 
-  const handleSave = async () => {
-    try {
-      await axios.post('http://localhost:5000/update-profile', profileData);
-      Cookies.set('user', JSON.stringify(profileData));
-    } catch (error) {
-      console.error('Error updating profile:', error);
-    }
   };
 
   return (
+    <>
+    <Navbar />
     <div className="bg-[#FAEDCD] min-h-screen flex justify-center py-10">
-      <div className="bg-[#FFF8EA] p-8 rounded-lg shadow-lg w-full max-w-3xl">
+      <form className="bg-[#FFF8EA] p-8 rounded-lg shadow-lg w-full max-w-3xl" onSubmit={handleSubmit}>
         <h2 className="text-3xl font-bold text-[#8B4513] mb-6">Edit Profile</h2>
 
         <h3 className="text-xl font-semibold text-[#A0522D]">Personal Information</h3>
-        <input name="firstName" value={profileData.firstName} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="First Name" />
-        <input name="lastName" value={profileData.lastName} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="Last Name" />
-        <input name="email" value={profileData.email} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="Email" />
+        <input name="name" value={profileData.name} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="Name" />
+        <input name="email" value={profileData.email} disabled={true} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="Email" />
 
         <h3 className="text-xl font-semibold text-[#A0522D] mt-6">Address</h3>
-        <input name="streetAddress" value={profileData.streetAddress} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="Street Address" />
+        <input name="address" value={profileData.address} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="Street Address" />
         <input name="city" value={profileData.city} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="City" />
         <input name="state" value={profileData.state} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="State" />
-        <input name="zipCode" value={profileData.zipCode} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="ZIP Code" />
+        <input name="zipcode" value={profileData.zipcode} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="ZIP Code" />
 
         <h3 className="text-xl font-semibold text-[#A0522D] mt-6">Skills and Hobbies</h3>
         <textarea name="skills" value={profileData.skills} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="List your skills"></textarea>
         <textarea name="hobbies" value={profileData.hobbies} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="List your hobbies"></textarea>
 
         <h3 className="text-xl font-semibold text-[#A0522D] mt-6">Certification(Optional)</h3>
-        <textarea name="certification" value={profileData.certifications} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="mention list of any updated certification"></textarea>
+        <textarea name="certification" value={profileData.certification} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="mention list of any updated certification"></textarea>
 
         
         <h3 className="text-xl font-semibold text-[#A0522D] mt-6">Experience</h3>
-        <select name="experience" value={profileData.experience} onChange={handleChange} className="border p-2 w-full mt-2">
-          <option value="">Select experience level</option>
-          <option value="Fresher">Fresher</option>
-          <option value="1-2 years">1-2 years</option>
-          <option value="3-5 years">3-5 years</option>
-          <option value="6+ years">6+ years</option>
-        </select>
+        <textarea name="experience" value={profileData.experience} onChange={handleChange} className="border p-2 w-full mt-2" placeholder="mention list of any updated certification"></textarea>
 
         <h3 className="text-xl font-semibold text-[#A0522D] mt-6">Update CV</h3>
-        <input type="file" onChange={handleFileChange} className="border p-2 w-full mt-2" />
-        {profileData.cv && <p className="mt-2 text-sm text-[#8B4513]">{profileData.cv.name}</p>}
+        <input type="file" name="file" onChange={handleChange} className="border p-2 w-full mt-2" />
+        {(profileData.filename)?profileData.filename:""} <p className="mt-2 text-sm text-[#8B4513]"></p>
 
-        <button onClick={handleSave} className="bg-[#8B4513] text-white px-4 py-2 rounded-lg mt-4 hover:bg-[#A0522D] flex items-center">
+        <button className="bg-[#8B4513] text-white px-4 py-2 rounded-lg mt-4 hover:bg-[#A0522D] flex items-center" type='submit'>
           <Edit className="mr-2" /> Save
         </button>
-      </div>
+      </form>
     </div>
+    <Footer />
+    </>
   );
 };
 
