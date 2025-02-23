@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+import { Link } from "react-router";
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -265,10 +266,10 @@ const Dashboard = () => {
                 <Calendar className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Schedule</span>
               </button> */}
-              <a href="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
+              <Link to="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
                 <User className="h-6 w-6 text-[#8B4513] mb-2" />
                 <button className="text-sm font-medium text-[#8B4513]">Profile</button>
-              </a>
+              </Link>
               {/* <button className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
                 <Settings className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Call</span>
