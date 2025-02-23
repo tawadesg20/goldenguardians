@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./components/UserContext.jsx";
-import { PaymentProvider } from "./components/payment/PaymentContext.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Axios from "axios";
 
@@ -43,7 +42,6 @@ const App = () => {
               <Route path="/careers" element={<Careers />} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/events" element={<Events />} />
-              <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/admin" element={<AdminDashboard/>} />
               <Route path="/admin/profile" element={<ApplicationProfile />} />
