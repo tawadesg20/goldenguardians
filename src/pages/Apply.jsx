@@ -69,7 +69,7 @@ const Apply = () => {
     data.append("languages", languages);
     data.append("file",formData.file);
 
-    const API_URL = "http://localhost:5000";
+    const API_URL = "https://golden-guardians-backend.onrender.com";
     console.log(...data.entries())
     axios({
       method: "POST",
