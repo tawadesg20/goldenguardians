@@ -169,7 +169,11 @@ export default function AdminDashboard() {
     alert(err.response.data.message)
   });
   }
+<<<<<<< HEAD
 //Admin sign in page
+=======
+
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
   if (!adminkeyCorrect)
     return (
       <div className="flex justify-center items-center h-screen bg-[#fefae0] text-[#5C3D2E]">
@@ -207,6 +211,7 @@ export default function AdminDashboard() {
         </form>
       </div>
     );
+<<<<<<< HEAD
   //admin dashboard after sign
   if(adminkeyCorrect)
   return (
@@ -226,6 +231,22 @@ export default function AdminDashboard() {
       </button>
     </div>
   </div>
+=======
+  
+  if(adminkeyCorrect)
+  return (
+    <div className="min-h-screen bg-[#faedcd] p-6">
+      <button onClick={signOut}>signOut</button>
+      {/* Top Bar */}
+      <div className="flex justify-between items-center bg-[#8B4513] text-white p-4 rounded-lg">
+        <h1 className="text-xl font-bold">Golden Guardians Admin Dashboard</h1>
+        <div className="flex space-x-4">
+          <div className="h-5 w-5 cursor-pointer" ></div>
+          <div className="h-5 w-5 cursor-pointer" ></div>
+          <div className="h-5 w-5 cursor-pointer" ></div>
+        </div>
+      </div>
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
 
       {/* Main Content */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
@@ -235,6 +256,10 @@ export default function AdminDashboard() {
             <div className="text-[#8B4513]">Pending Volunteer Applications</div>
           </div>
           <div>
+<<<<<<< HEAD
+=======
+           
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                {(pendingVolunteers.length>0)? pendingVolunteers.map((application,index)=>(
                 <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
                 <div>
@@ -262,6 +287,10 @@ export default function AdminDashboard() {
             <div className="text-[#8B4513]">Accepted Volunteer Applications</div>
           </div>
           <div>
+<<<<<<< HEAD
+=======
+           
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                {(acceptedApplications.length>0)? acceptedApplications.map((application,index)=>(
                 <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
                 <div>
@@ -273,12 +302,22 @@ export default function AdminDashboard() {
                )):<p className="text-center text-[#8B4513]">No Accepted applications.</p>}
           </div>
         </div>
+<<<<<<< HEAD
         {/* Volunteer Rejected Applications */}
         <div className="bg-white shadow-lg rounded-xl p-4">
           <div>
             <div className="text-[#8B4513]">Rejected Volunteer Applications</div>
           </div>
         <div>
+=======
+{/* Volunteer Rejected Applications */}
+<div className="bg-white shadow-lg rounded-xl p-4">
+          <div>
+            <div className="text-[#8B4513]">Rejected Volunteer Applications</div>
+          </div>
+          <div>
+           
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                {(rejectedApplicatoins.length>0)? rejectedApplicatoins.map((application,index)=>(
                 <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
                 <div>
@@ -290,6 +329,7 @@ export default function AdminDashboard() {
                )):<p className="text-center text-[#8B4513]">No Rejected applications.</p>}
           </div>
         </div>
+<<<<<<< HEAD
         {/* Volunteer Requested Senior */}
         <div className="bg-white shadow-lg rounded-xl p-6">
       <h2 className="text-[#8B4513] font-bold text-lg mb-4">Volunteer Requested Seniors</h2>
@@ -358,6 +398,49 @@ export default function AdminDashboard() {
        )}
       </div>
 
+=======
+{/* Volunteer Requested Senior */}
+<div className="bg-white shadow-lg rounded-xl p-4">
+          <div>
+            <div className="text-[#8B4513]">Volunteer Requested Seniors</div>
+          </div>
+          <div>
+           
+               {(volunteerRequested.length>0)? volunteerRequested.map((volunteer,index)=>(
+                <div className="flex justify-between items-center bg-[#faedcd] p-3 rounded-lg mb-2" key={index}>
+                <div>
+                  <p className="font-bold text-[#8B4513]">Volunteer Name: {volunteer.application.data.fullName}</p>
+                  <p className="font-bold text-[#8B4513]">Volunteer Email: {volunteer.email}</p>
+                  <p className="text-sm">Skills: {(volunteer.skills.length>0)?volunteer.skills.join(","):"Not mentioned"}</p>
+                  <p className="font-bold text-[#8B4513]">Senior Email: {volunteer.senior.email}</p>
+                  <form action="">
+                    <input type="text" placeholder="Enter Task" onChange={onTaskChange} /><br />
+                    <input type="date" name="date" onChange={(e) => setDate(e.target.value)} required />
+                    <label className="block">
+        Select Start Time:
+        <input
+          type="time"
+          onChange={(e) => setStartTime(e.target.value)}
+          className="border p-2 rounded"
+        />
+      </label>
+      <label className="block">
+        Select End:
+        <input
+          type="time"
+          onChange={(e) => setEndTime(e.target.value)}
+          className="border p-2 rounded"
+        />
+      </label>
+                  </form>
+                  <button onClick={()=>{onTaskSubmit(volunteer.email,volunteer.senior.email,volunteer.city)}} className="bg-red-200 px-10 py-2 rounded-full">Assign Task</button>
+                </div>
+                
+              </div>
+               )):<p className="text-center text-[#8B4513]">No Requested applications.</p>}
+          </div>
+        </div>
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
         {/* Task Assignments & Location */}
         <div className="bg-white shadow-lg rounded-xl p-4">
           <div>
@@ -369,7 +452,11 @@ export default function AdminDashboard() {
                 <div key={index} className="bg-[#faedcd] p-3 rounded-lg mb-2">
                   <p className="font-bold text-[#8B4513]">Volunteer Email: {volunteer.email}</p>
                   <p className="text-sm">Task: {volunteer.senior.task}</p>
+<<<<<<< HEAD
                   <div className="text-sm flex items-center">Location: {volunteer.city}</div>
+=======
+                  <div className="text-sm flex items-center"><p className="h-4 w-4 mr-1" ></p> Location: {volunteer.city}</div>
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                 </div>
               ))
             ) : (
@@ -400,4 +487,8 @@ export default function AdminDashboard() {
       </div>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5

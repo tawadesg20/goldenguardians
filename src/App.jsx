@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { UserProvider } from "./components/UserContext.jsx";
-import { PaymentProvider } from "./components/payment/PaymentContext.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Axios from "axios";
 
@@ -15,7 +14,6 @@ import VolunteerRegistration from "./pages/VolunteerRegistration.jsx";
 import SeniorRegistration from "./pages/SeniorRegistration.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Events from "./pages/Events.jsx";
-import Payment from "./pages/Payment.jsx";
 import Apply from "./pages/Apply.jsx";
 import Careers from "./pages/Careers.jsx";
 import Profile from "./pages/Profile.jsx";
@@ -26,7 +24,7 @@ import ApplicationProfile from "./pages/applicationProfile.jsx";
 
 const App = () => {
   return (
-    <PaymentProvider>
+    
       <UserProvider>
         <Router>
           <div className="min-h-screen bg-[#faedcd]">
@@ -43,7 +41,6 @@ const App = () => {
               <Route path="/careers" element={<Careers />} />
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/events" element={<Events />} />
-              <Route path="/payment" element={<ProtectedRoute><Payment /></ProtectedRoute>} />
               <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
               <Route path="/admin" element={<AdminDashboard/>} />
               <Route path="/admin/profile" element={<ApplicationProfile />} />
@@ -51,7 +48,6 @@ const App = () => {
           </div>
         </Router>
       </UserProvider>
-    </PaymentProvider>
   );
 };
 

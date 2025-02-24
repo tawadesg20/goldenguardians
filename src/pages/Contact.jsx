@@ -3,7 +3,10 @@ import { Mail, Phone, MapPin } from 'lucide-react';
 import axios from 'axios';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
+<<<<<<< HEAD
 import { useState } from 'react';
+=======
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
 
 const Contact = () => {
   const [contact,setContact] = useState({name:"",email:"",message:"",file:null})

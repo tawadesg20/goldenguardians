@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+import { Link } from "react-router";
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -58,10 +62,16 @@ const formatTime = (time) => {
 };
 
 const Dashboard = () => {
+<<<<<<< HEAD
   const [user, setUser] = useState({ message: "Searching",data:{} });
   const [request,setRequested] = useState(false);
   const [senior,setSenior] = useState({});
   const [volunteer,setVolunteer] = useState({})
+=======
+  const [user, setUser] = useState({ message: "Searching" });
+  const [request,setRequested] = useState(false);
+  const [senior,setSenior] = useState({});
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
   const [matches, setMatches] = useState([]);
   const [upcomingVisits,setUpcommingVisits] = useState([])
   const navigate = useNavigate();
@@ -72,10 +82,17 @@ const Dashboard = () => {
   });
 
 
+<<<<<<< HEAD
   const matchingAlgorithm = async (type) => {
     try {
       const response = await axios.post(
         `https://golden-guardians-backend.onrender.com/${type=="skills" ? "volunteer" : "senior"}/matches`,
+=======
+  const matchingAlgorithm = async (skills) => {
+    try {
+      const response = await axios.post(
+        `https://golden-guardians-backend.onrender.com/${skills ? "volunteer" : "senior"}/matches`,
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
         { email: user.data.email }
       );
       console.log(response.data.matches)
@@ -146,7 +163,11 @@ const Dashboard = () => {
   const requestSenior = async (senior) => {
     try {
       const response = await axios.post(
+<<<<<<< HEAD
         `https://golden-guardians-backend.onrender.com/volunteer/volunteer/connect`,
+=======
+        `https://golden-guardians-backend.onrender.comvolunteer/volunteer/connect`,
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
         { volunteerEmail: user.data.email,seniorEmail:senior.email }
       );
       console.log(response.data)
@@ -197,7 +218,11 @@ const Dashboard = () => {
               <Award className="h-6 w-6 text-[#8B4513]" />
             </div>
             <div>
+<<<<<<< HEAD
               <h3 className="text-2xl font-bold text-[#8B4513]">{(user.data && user.data.skills)?user.data.skills.length:(user.data && user.data.interests)?user.data.interests.length:0}</h3>
+=======
+              <h3 className="text-2xl font-bold text-[#8B4513]">{(user.data)?user.data.skills?user.data.skills.length:user.data.interests.length:0}</h3>
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
               <p className="text-[#A0522D]">Skills Offered</p>
             </div>
           </div>
@@ -227,6 +252,7 @@ const Dashboard = () => {
                     <MapPin className="h-4 w-4 mr-1" />
                     {senior.city}
                   </div>
+<<<<<<< HEAD
                 </div>:(volunteer.date)?<div className="border-b border-[#DEB887] pb-4">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className="font-medium text-[#8B4513]">{volunteer.task}</h3>
@@ -242,6 +268,8 @@ const Dashboard = () => {
                     <MapPin className="h-4 w-4 mr-1" />
                     {volunteer.city}
                   </div>
+=======
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                 </div>:<div>No upcomming events</div>}
         
             </div>
@@ -268,9 +296,15 @@ const Dashboard = () => {
                   <p className="text-sm text-[#A0522D]">{(senior.dateTime)?timeAgo(senior.dateTime):"Just now"}</p>
                 </div>:null
                 }
+<<<<<<< HEAD
                 {(volunteer.task)?<div className="border-b border-[#DEB887] pb-4">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-[#8B4513] font-medium">task assigned by admin: {volunteer.task}</p>
+=======
+                <div className="border-b border-[#DEB887] pb-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-[#8B4513] font-medium">Your Senior:{senior.email} {(senior.status=="Assigned")?"Approved"+" by admin":senior.status}</p>
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       // notification.priority === 'high' ? 'bg-red-100 text-red-800' :
                       // notification.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
@@ -280,6 +314,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                   <p className="text-sm text-[#A0522D]">{(senior.dateTime)?timeAgo(senior.dateTime):"Just now"}</p>
+<<<<<<< HEAD
                 </div>:null
                 }
                 {(senior.email || volunteer.email)?<div className="border-b border-[#DEB887] pb-4">
@@ -296,6 +331,9 @@ const Dashboard = () => {
                   {/* <p className="text-sm text-[#A0522D]">{(volunteer.time)?timeAgo(volunteer.time):"Just now"}</p> */}
                   <p className="text-sm text-[#A0522D]">{"Just now"}</p>
                 </div>:null}
+=======
+                </div>
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
             </div>
           </div>
 
@@ -311,7 +349,11 @@ const Dashboard = () => {
                 <Calendar className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Schedule</span>
               </button> */}
+<<<<<<< HEAD
               <Link href="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
+=======
+              <Link to="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                 <User className="h-6 w-6 text-[#8B4513] mb-2" />
                 <button className="text-sm font-medium text-[#8B4513]">Profile</button>
               </Link>
@@ -324,7 +366,11 @@ const Dashboard = () => {
         </div>
 
         {/* Matches Section */}
+<<<<<<< HEAD
         {(user.data.interests)?  <div className="mt-8">
+=======
+       {(senior.email)?<div></div>: <div className="mt-8">
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
           <h2 className="text-2xl font-semibold text-[#8B4513] mb-4">Your Matches</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {matches.length === 0 ? (
@@ -343,6 +389,7 @@ const Dashboard = () => {
                       <p className="text-sm text-[#A0522D]">{match.email}</p>
                     </div>
                   </div>
+<<<<<<< HEAD
                 </div>
               ))
             )}
@@ -367,6 +414,8 @@ const Dashboard = () => {
                       <p className="text-sm text-[#A0522D]">{match.email}</p>
                     </div>
                   </div>
+=======
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
                   <button className="w-full bg-[#8B4513] text-white py-2 rounded-lg hover:bg-[#A0522D] transition-colors duration-200" onClick={()=>{requestSenior(match)}}>
                     Connect
                   </button>
@@ -374,7 +423,11 @@ const Dashboard = () => {
               ))
             )}
           </div>
+<<<<<<< HEAD
         </div>:null}
+=======
+        </div>}
+>>>>>>> ff2fc50649ef227f970b4243ad08df294a5489f5
       </div>
     </div>
     </>
