@@ -21,7 +21,7 @@ const SeniorRegistration = () => {
       phone: '',
       relationship: ''
     },
-    specialneeds: [],
+    specialneeds: " ",
     interests: [],
     services: []
   });
@@ -96,7 +96,7 @@ const onEmergencyChange = (event) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // TODO: Implement registration logic
-   let submissionData = {name:"",email:"",phone:"",dob:"",address:"",emergencycontact:"",interests:"",services:"",city:"",zipcode:"",state:""}
+   let submissionData = {name:"",email:"",phone:"",dob:"",address:"",emergencycontact:"",specialneeds:"",interests:"",services:"",city:"",zipcode:"",state:""}
     submissionData.name=inputFormData.firstname+" "+inputFormData.lastname;
     submissionData.email=inputFormData.email;
     submissionData.phone=inputFormData.phone;
@@ -108,6 +108,7 @@ const onEmergencyChange = (event) => {
     submissionData.city=inputFormData.city;
     submissionData.zipcode=inputFormData.zipcode;
     submissionData.state=inputFormData.state;
+    submissionData.specialneeds=inputFormData.specialneeds;
     console.log(submissionData)
 
     const API_URL = "https://golden-guardians-backend.onrender.com";

@@ -9,6 +9,7 @@ import Navbar from '../components/Navbar.jsx';
 
 const Home = () => {
  const [user, setUser] = useState({message:"Searching"});
+ const [admin, setAdmin] = useState({message:"Searching"});
       
         useEffect(() => {
           const userData = Cookies.get("user");
@@ -17,11 +18,20 @@ const Home = () => {
           }
           else
           setUser({message:"Not Found"})
-      
+          const adminData = Cookies.get("adminkey");
+          if (adminData) {
+            setAdmin({message:"Found",data:adminData}); // Parse the stringified object
+          }
+          else
+          setAdmin({message:"Not Found"})
         }, []);
         if (user.message!="Searching" && user.message=="Found") {
           // If user is not authenticated, redirect to login
           return <Navigate to="/dashboard" replace />;
+        }
+        if (admin.message!="Searching" && admin.message=="Found") {
+          // If user is not authenticated, redirect to login
+          return <Navigate to="/admin" replace />;
         }
 
   return (

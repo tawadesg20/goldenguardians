@@ -7,35 +7,25 @@ import axios from 'axios';
 import { Calendar, Clock, MessageSquare, Bell, Settings, User, Heart, MapPin, Award } from 'lucide-react';
 import Navbar from '../components/Navbar';
 
-const timeAgo =(dateTimeString)=>{
+const timeAgo =(timestamp) => {
   const now = new Date();
-  const past = new Date(dateTimeString);
+  const past = new Date(timestamp);
+  let diff = Math.floor((now - past) / 1000); // Difference in seconds
 
-  // Convert both times to IST (UTC+5:30)
-  const IST_OFFSET = 5.5 * 60 * 60 * 1000; // IST offset in milliseconds
-  const nowIST = new Date(now.getTime() + IST_OFFSET);
-  const pastIST = new Date(past.getTime() + IST_OFFSET);
+  if (diff < 60) return "just now"; // Less than a minute
 
-  const diffInSeconds = Math.floor((nowIST - pastIST) / 1000);
+  const minutes = Math.floor(diff / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
-  const intervals = [
-    { label: "year", seconds: 31536000 },
-    { label: "month", seconds: 2592000 },
-    { label: "day", seconds: 86400 },
-    { label: "hour", seconds: 3600 },
-    { label: "minute", seconds: 60 },
-    { label: "second", seconds: 1 }
-  ];
+  let result = [];
 
-  for (const interval of intervals) {
-    const count = Math.floor(diffInSeconds / interval.seconds);
-    if (count >= 1) {
-      return `${count} ${interval.label}${count > 1 ? "s" : ""} ago`;
-    }
-  }
+  if (days > 0) result.push(`${days} day${days > 1 ? "s" : ""}`);
+  if (hours % 24 > 0) result.push(`${hours % 24} hour${hours % 24 > 1 ? "s" : ""}`);
+  if (minutes % 60 > 0) result.push(`${minutes % 60} min${minutes % 60 > 1 ? "s" : ""}`);
 
-  return "just now";
-}
+  return result.join(" ");
+};
 
 const calculateDuration = (startTime, endTime) => {
   const [startHour, startMinute] = startTime.split(":").map(Number);
@@ -108,11 +98,11 @@ const Dashboard = () => {
       axios.get(`https://golden-guardians-backend.onrender.com/volunteer/${user.email}`).then(response=>{
         if(response.data.volunteer)
         {
-          if(response.data.volunteer.senior.email)
+          if(response.data.volunteer.senior && response.data.volunteer.senior.email)
             setSenior(response.data.volunteer.senior)
         }
         setUser({ message: "Found", data: response.data.volunteer })
-      }).catch(err=>alert(err.response.data.message))
+      }).catch(err=>{alert(err.response.data.message)})
 
       setUser({ message: "Found", data: JSON.parse(userData) });
       setSenior(JSON.parse(userData).senior?JSON.parse(userData).senior:{})
@@ -121,7 +111,7 @@ const Dashboard = () => {
       axios.get(`https://golden-guardians-backend.onrender.com/senior/${user.email}`).then(response=>{
         if(response.data.senior)
         {
-          if(response.data.senior.volunteer.email)
+          if(response.data.senior.volunteer && response.data.senior.volunteer.email)
             setVolunteer(response.data.senior.volunteer)
         }
         console.log(response.data.senior.volunteer)
@@ -136,12 +126,6 @@ const Dashboard = () => {
   if (user.message !== "Searching" && user.message === "Not Found") {
     return <Navigate to="/login" replace />;
   }
-
-  const notifications = [
-    { id: 1, message: 'New volunteer match available', time: '2 hours ago', priority: 'high' },
-    { id: 2, message: 'Upcoming visit reminder', time: '1 day ago', priority: 'medium' },
-    { id: 3, message: 'Thank you message from Sarah', time: '2 days ago', priority: 'low' },
-  ];
 
   const requestSenior = async (senior) => {
     try {
@@ -265,7 +249,7 @@ const Dashboard = () => {
                       High
                     </span>
                   </div>
-                  <p className="text-sm text-[#A0522D]">{(senior.dateTime)?timeAgo(senior.dateTime):"Just now"}</p>
+                  <p className="text-sm text-[#A0522D]">{(senior.assTime)?timeAgo(senior.assTime):"Just now"}</p>
                 </div>:null
                 }
                 {(volunteer.task)?<div className="border-b border-[#DEB887] pb-4">
@@ -279,12 +263,13 @@ const Dashboard = () => {
                       High
                     </span>
                   </div>
-                  <p className="text-sm text-[#A0522D]">{(senior.dateTime)?timeAgo(senior.dateTime):"Just now"}</p>
+                  <p className="text-sm text-[#A0522D]">{(volunteer.assTime)?timeAgo(volunteer.assTime):"Just now"}</p>
                 </div>:null
                 }
                 {(senior.email || volunteer.email)?<div className="border-b border-[#DEB887] pb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-[#8B4513] font-medium">Your {senior.email?"Senior":"Volunteer"}:{senior.email?senior.email:volunteer.email} {(senior.status=="Assigned")?"Approved"+" by admin":senior.status}</p>
+                  <p className="text-[#8B4513] font-medium">Your {senior.email?"Senior":"Volunteer"}:{senior.email?senior.email:volunteer.email} {(senior.status=="Assigned")?"Approved"+" by admin":senior.status} {(volunteer.status=="Assigned")?"Approved"+" by admin":volunteer.status} </p>
+                  
                     <span className={`px-2 py-1 rounded text-xs font-medium ${
                       // notification.priority === 'high' ? 'bg-red-100 text-red-800' :
                       // notification.priority === 'medium' ? 'bg-yellow-100 text-yellow-800' :
@@ -294,8 +279,9 @@ const Dashboard = () => {
                     </span>
                   </div>
                   {/* <p className="text-sm text-[#A0522D]">{(volunteer.time)?timeAgo(volunteer.time):"Just now"}</p> */}
-                  <p className="text-sm text-[#A0522D]">{"Just now"}</p>
+                  <p className="text-sm text-[#A0522D]">{(volunteer.status=="Requested")?timeAgo(volunteer.reqTime):(senior.status=="Requested")?timeAgo(senior.reqTime):"Just now"}{(volunteer.status=="Assigned")?timeAgo(volunteer.assTime):(senior.status=="Assigned")?timeAgo(senior.assTime):"Just now"}</p>
                 </div>:null}
+                {!(senior.task || volunteer.task || senior.email || volunteer.email)?<div> <p className="text-sm text-[#A0522D]">No Notifications recieved</p></div>:null}
             </div>
           </div>
 
@@ -311,7 +297,7 @@ const Dashboard = () => {
                 <Calendar className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Schedule</span>
               </button> */}
-              <Link to="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
+              <Link href="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
                 <User className="h-6 w-6 text-[#8B4513] mb-2" />
                 <button className="text-sm font-medium text-[#8B4513]">Profile</button>
               </Link>
