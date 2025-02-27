@@ -242,13 +242,13 @@ export default function AdminDashboard() {
                   <p className="text-sm">Skills: {(application.skills.length>0)?application.skills.join(","):"Not mentioned"}</p>
                 </div>
                 <div className="flex space-x-2">
-                <button onClick={() => viewProfile(application.email)} className="bg-[#8B4513] text-white px-3 py-2 rounded-lg flex items-center">
+                <button onClick={() => viewProfile(application.email)} className="bg-green-500 text-white px-3 py-2 rounded-lg flex items-center">
                    View Profile
                   </button>
-                  <button onClick={() => handleApprove(application.email)} className="bg-[#8B4513] text-white px-3 py-2 rounded-lg flex items-center">
+                  <button onClick={() => handleApprove(application.email)} className="bg-green-500 text-white px-3 py-2 rounded-lg flex items-center">
                    Approve
                   </button>
-                  <button onClick={() => handleReject(application.email)} className="bg-[#8B4513] text-white px-3 py-2 rounded-lg flex items-center">
+                  <button onClick={() => handleReject(application.email)} className="bg-red-500 text-white px-3 py-2 rounded-lg flex items-center">
                      Reject
                   </button>
                 </div>
