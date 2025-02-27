@@ -59,7 +59,8 @@ const Profile = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log( (profileData.interests)?profileData.interests.split(","):[])
+    profileData.interests = (profileData.interests)?profileData.interests.split(","):[]
+    profileData.skills=(profileData.skills)?profileData.skills.split(","):[]
     const data = new FormData();
      data.append("name", profileData.name);
     data.append("email", profileData.email);
@@ -67,9 +68,9 @@ const Profile = () => {
     data.append("city", profileData.city);
     data.append("state", profileData.state);
     data.append("zipcode", profileData.zipcode);
-    data.append("skills", (profileData.skills)?profileData.skills.split(","):[]);
+    data.append("skills", profileData.skills);
     data.append("specialneeds", profileData.specialneeds);
-    data.append("interests", (profileData.interests)?profileData.interests.split(","):[]);
+    data.append("interests", profileData.interests);
     data.append("hobbies",  profileData.hobbies);
     data.append("ename",  profileData.ename);
     data.append("ephone",  profileData.ephone);
@@ -78,6 +79,8 @@ const Profile = () => {
     data.append("experience", profileData.experience);
     if(profileData.file)
     data.append("file",profileData.file);
+    profileData.interests = (profileData.interests)?profileData.interests.join(","):[]
+    profileData.skills=(profileData.skills)?profileData.skills.join(","):[]
 
     const API_URL = "https://golden-guardians-backend.onrender.com";
     console.log(...data.entries())
@@ -94,6 +97,7 @@ const Profile = () => {
   });
 
   };
+
   if(profileData.skills)
   {
     return (

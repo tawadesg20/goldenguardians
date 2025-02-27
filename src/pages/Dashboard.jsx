@@ -297,7 +297,7 @@ const Dashboard = () => {
                 <Calendar className="h-6 w-6 text-[#8B4513] mb-2" />
                 <span className="text-sm font-medium text-[#8B4513]">Schedule</span>
               </button> */}
-              <Link href="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
+              <Link to="/profile" className="flex flex-col items-center justify-center p-4 bg-[#FFF8EA] rounded-lg hover:bg-[#DEB887] transition-colors duration-200">
                 <User className="h-6 w-6 text-[#8B4513] mb-2" />
                 <button className="text-sm font-medium text-[#8B4513]">Profile</button>
               </Link>
