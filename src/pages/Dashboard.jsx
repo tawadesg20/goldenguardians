@@ -279,7 +279,7 @@ const Dashboard = () => {
                     </span>
                   </div>
                   {/* <p className="text-sm text-[#A0522D]">{(volunteer.time)?timeAgo(volunteer.time):"Just now"}</p> */}
-                  <p className="text-sm text-[#A0522D]">{(volunteer.status=="Requested")?timeAgo(volunteer.reqTime):(senior.status=="Requested")?timeAgo(senior.reqTime):"Just now"}{(volunteer.status=="Assigned")?timeAgo(volunteer.assTime):(senior.status=="Assigned")?timeAgo(senior.assTime):"Just now"}</p>
+                  <p className="text-sm text-[#A0522D]">{(volunteer.status=="Requested")?timeAgo(volunteer.reqTime):(senior.status=="Requested")?timeAgo(senior.reqTime):(volunteer.status=="Assigned")?timeAgo(volunteer.assTime):(senior.status=="Assigned")?timeAgo(senior.assTime):"Just now"}</p>
                 </div>:null}
                 {!(senior.task || volunteer.task || senior.email || volunteer.email)?<div> <p className="text-sm text-[#A0522D]">No Notifications recieved</p></div>:null}
             </div>
