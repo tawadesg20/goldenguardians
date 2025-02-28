@@ -84,8 +84,19 @@ export default function AdminDashboard() {
   };
   const viewProfile = (id) => {
     const adminkey = Cookies.get("adminkey");
-    const API_URL = `https://golden-guardians-backend.onrender.com/${adminkey}/application`;
-    navigate(`/admin/profile?email=${id}`)
+    const API_URL = "https://golden-guardians-backend.onrender.com";
+      axios({
+        method: "post",
+        url: API_URL+`/${adminkey}/application`,
+        data:{type:"volunteer",email:id},
+    })
+    .then((response) => {
+      const filelink = "https://"+response.data.application.resume.link;
+      window.open(filelink, "_blank")
+    })
+    .catch((err) => {
+          alert(err.response.data.message)
+    })
   };
 
   useEffect(() => {
