@@ -137,7 +137,7 @@ const Contact = () => {
                 </p>
                 <a href="tel:7718097415" target='_blank'  className="flex items-center justify-center bg-[#FAEDCD] p-4 rounded-md">
                   <Phone className="h-6 w-6 text-[#8B4513] mr-3" />
-                  <span href="mailto:contact@goldenguardians.com" target='_blank'  className="text-xl font-bold text-[#8B4513]">1-800-GUARDIAN</span>
+                  <span href="mailto:contact@goldenguardians.com" target='_blank'  className="text-xl font-bold text-[#8B4513]">Call Golden Guardians</span>
                 </a>
               </div>
             </div>
