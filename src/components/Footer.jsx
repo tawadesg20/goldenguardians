@@ -10,7 +10,7 @@ const Footer = () => {
           <div>
             <Logo />
             <p className="mt-4 text-[#8B4513]">Golden Guardians</p>
-            <p className="text-[#A0522D]">8989898989</p>
+            <p className="text-[#A0522D]">7718097415</p>
             <p className="text-[#A0522D]">goldguardians@contact.in</p>
           </div>
           
@@ -20,13 +20,13 @@ const Footer = () => {
               <li><a href="/" className="text-[#A0522D] hover:text-[#8B4513]">Home</a></li>
               <li><a href="/events" className="text-[#A0522D] hover:text-[#8B4513]">Events</a></li>
               <li><a href="/careers" className="text-[#A0522D] hover:text-[#8B4513]">Careers</a></li>
-              <li><a href="/payment" className="text-[#A0522D] hover:text-[#8B4513]">Payment</a></li>
+              <li><a href="/contact" className="text-[#A0522D] hover:text-[#8B4513]">Contact</a></li>
             </ul>
           </div>
           
           <div>
             <h3 className="text-lg font-semibold text-[#8B4513] mb-4">Support</h3>
-            <p className="text-[#A0522D]">022-76789989</p>
+            <p className="text-[#A0522D]">7718097415</p>
             <p className="text-[#A0522D] mt-2">Live life to the fullest!</p>
           </div>
           
