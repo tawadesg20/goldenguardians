@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { UserProvider } from "./components/UserContext.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Axios from "axios";
 
@@ -25,7 +24,7 @@ import ApplicationProfile from "./pages/applicationProfile.jsx";
 const App = () => {
   return (
     
-      <UserProvider>
+      
         <Router>
           <div className="min-h-screen bg-[#faedcd]">
             <Routes>
@@ -47,7 +46,7 @@ const App = () => {
             </Routes>
           </div>
         </Router>
-      </UserProvider>
+      
   );
 };
 
