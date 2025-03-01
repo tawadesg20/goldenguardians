@@ -1,11 +1,6 @@
 import React from 'react';
 import { Heart, Users, Clock, MapPin } from 'lucide-react';
 
-// type FeatureCardProps = {
-//   icon: 'heart' | 'users' | 'clock' | 'location';
-//   title: string;
-//   description: string;
-// };
 
 const FeatureCard = ({ icon, title, description }) => {
   const getIcon = () => {
