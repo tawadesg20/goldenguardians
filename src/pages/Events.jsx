@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, Clock, MapPin, Heart } from 'lucide-react';
 import EventCalendar from '../components/calendar/EventCalendar';
+import AccessibleButton from '../components/AccessibleButton';
 import Footer from '../components/Footer';
 import Navbar from '../components/Navbar';
 
