@@ -60,7 +60,7 @@ const Events = () => {
     <div className="px-4 md:px-8 lg:px-16 flex-grow">
     {/* Hero Section */}
     <div className="text-center py-8 md:py-12">
-      <h1 className="text-3xl md:text-5xl font-bold text-[#8B4513] mb-4">
+      <h1 className="text-4xl font-bold text-[#8B4513] mb-3">
         Join Our Vibrant Community Events
       </h1>
       <p className="text-lg md:text-xl text-[#A0522D] max-w-3xl mx-auto">
