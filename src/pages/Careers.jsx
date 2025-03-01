@@ -33,17 +33,12 @@ const Careers = () => {
         {/* Main Content */}
         <div className="flex-grow flex items-center justify-center p-6">
           <div className="w-full max-w-4xl bg-[#FFF8E1] shadow-2xl rounded-2xl p-10 sm:p-12">
-            <h1 className="text-4xl sm:text-5xl font-bold text-[#8B4513] text-center mb-10">
+            <h1 className="text-4xl font-bold text-[#8B4513] mb-3">
               Join Our Team
             </h1>
             <p className="text-lg text-[#3A6625] mb-6 text-center leading-relaxed">
             Golden Guardians seeks passionate, dedicated individuals to join their team, aiming to make a difference in the lives of senior citizens.
             </p>
-            <p className="text-lg text-[#3A6625] mb-8 text-center leading-relaxed">
-              Fill out our application form by clicking the button below. Let’s create a brighter
-              future together!
-            </p>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
           {[
           { title: "Accounting & Funding", description: "Ensure seamless financial operations.", img: "/images/finance.jpg" },
