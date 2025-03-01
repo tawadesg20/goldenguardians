@@ -56,8 +56,8 @@ const services = [
 
 const plans = [
   { name: "Trial", price: "Free", duration: "30 Days", features: ["Basic companionship services", "2 visits per week", "Emergency support"] },
-  { name: "Basic", price: "999 Rps", duration: "per month", features: ["All trial features", "4 visits per week", "Activity planning", "24/7 support line"] },
-  { name: "Premium", price: "4499 Rps", duration: "per month", features: ["All basic features", "Daily visits available", "Specialized activities", "Priority matching", "Dedicated coordinator"] }
+  { name: "Basic", price: "₹999/-", duration: "per month", features: ["All trial features", "4 visits per week", "Activity planning", "24/7 support line"] },
+  { name: "Premium", price: "₹2499/-", duration: "per month", features: ["All basic features", "Daily visits available", "Specialized activities", "Priority matching", "Dedicated coordinator"] }
 ];
 
 const ServiceCard = ({ icon, title, description }) => (

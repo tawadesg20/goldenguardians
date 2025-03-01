@@ -69,7 +69,7 @@ const Events = () => {
     </div>
 
     {/* Navigation Tabs */}
-    <div className="shadow-md py-4 flex justify-center flex-wrap gap-3">
+    <div className="py-4 flex justify-center flex-wrap gap-3">
       {Object.keys(events).map((tab) => (
         <button
           key={tab}
@@ -81,11 +81,6 @@ const Events = () => {
           {tab}
         </button>
       ))}
-    </div>
-
-    {/* Event Calendar */}
-    <div className="mt-8">
-      <EventCalendar />
     </div>
 
     {/* Event Cards */}
