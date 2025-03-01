@@ -37,11 +37,8 @@ const Careers = () => {
               Join Our Team
             </h1>
             <p className="text-lg text-[#3A6625] mb-6 text-center leading-relaxed">
-              At <strong>Golden Guardians</strong>, we are always looking for passionate and
-              dedicated individuals to join our team. If you are interested in making a
-              difference in the lives of senior citizens, we would love to hear from you.
+            Golden Guardians seeks passionate, dedicated individuals to join their team, aiming to make a difference in the lives of senior citizens.
             </p>
-            
             <p className="text-lg text-[#3A6625] mb-8 text-center leading-relaxed">
               Fill out our application form by clicking the button below. Let’s create a brighter
               future together!
