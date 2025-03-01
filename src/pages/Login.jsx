@@ -113,7 +113,7 @@ const Login = () => {
                         </label>
                       </div>
                     </div>
-                    <button type="submit" disabled={!validEmail || userType == null} className={`w-full max-w-md px-4 py-3 text-lg font-semibold text-white ${(!validEmail || userType == null) ? "bg-gray-400" : "bg-[#D4A373] hover:bg-[#8B4513]"} rounded-lg transition`}>{status === "nothing" ? "Request OTP" : "Requesting..."}</button>
+                    <button type="submit" disabled={!validEmail || userType == null} className={`w-full max-w-md px-4 py-3 text-lg font-semibold text-white ${(!validEmail || userType == null) ? "bg-[#8B4513]" : "bg-[#D4A373] hover:bg-[#8B4513]"} rounded-lg transition`}>{status === "nothing" ? "Request OTP" : "Requesting..."}</button>
                   </>
                 )}
                 {clickedOtp && (
