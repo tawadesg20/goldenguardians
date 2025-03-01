@@ -78,7 +78,7 @@ const PlanCard = ({ name, price, duration, features }) => (
     <ul className="text-left space-y-2">
       {features.map((feature, index) => (
         <li key={index} className="flex items-center text-[#8B4513]">
-          <span className="mr-2 black-tick"></span> {feature}
+          <span className="mr-2">✔</span> {feature}
         </li>
       ))}
     </ul>
