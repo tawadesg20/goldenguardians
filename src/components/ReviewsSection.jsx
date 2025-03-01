@@ -13,19 +13,19 @@ const ReviewsSection = () => {
             name="Grendel Denoza"
             age="87"
             rating={5}
-            type="GrandKid"
+            type="GrandPal"
           />
           <ReviewCard
             name="Ram Patel"
             age="80"
             rating={5}
-            type="GrandKid"
+            type="GrandPal"
           />
           <ReviewCard
             name="Neela"
             age="89"
             rating={5}
-            type="GrandKid"
+            type="GrandPal"
           />
         </div>
       </div>
