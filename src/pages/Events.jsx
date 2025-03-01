@@ -63,13 +63,13 @@ const Events = () => {
       <h1 className="text-4xl font-bold text-[#8B4513] mb-3">
         Join Our Vibrant Community Events
       </h1>
-      <p className="text-lg md:text-xl text-[#A0522D] max-w-3xl mx-auto">
+      <p className="text-lg text-[#A0522D] max-w-3xl mx-auto">
         Discover joy, make new friends, and create lasting memories with our carefully curated events designed for your comfort and enjoyment.
       </p>
     </div>
 
     {/* Navigation Tabs */}
-    <div className="bg-[#CCD5AE] shadow-md py-4 flex justify-center flex-wrap gap-3">
+    <div className="shadow-md py-4 flex justify-center flex-wrap gap-3">
       {Object.keys(events).map((tab) => (
         <button
           key={tab}
