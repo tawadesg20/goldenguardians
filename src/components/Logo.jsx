@@ -2,13 +2,13 @@ import React from 'react';
 
 const Logo = () => {
   return (
-    <div className="flex items-center justify-center">
-      <div className="max-w-[50vw] max-h-[15vh] sm:max-w-[40vw] sm:max-h-[20vh] md:max-w-[30vw] md:max-h-[25vh] lg:max-w-[20vw] lg:max-h-[30vh] xl:max-w-[15vw] xl:max-h-[35vh]"> 
-        {/* Adjusted max-w and max-h for smaller desktop logo */}
-        <img 
-          src="/images/image(1).jpg" 
-          alt="Golden Guardians Logo" 
-          className="w-full h-auto object-contain" 
+    <div className="flex items-center"> {/* Remove justify-center */}
+      <div className="max-w-[100px] max-h-[40px] sm:max-w-[120px] sm:max-h-[48px] md:max-w-[140px] md:max-h-[56px] lg:max-w-[160px] lg:max-h-[64px] xl:max-w-[180px] xl:max-h-[72px]">
+        {/* Adjusted max-w and max-h to fixed pixel values for better control */}
+        <img
+          src="/images/image(1).jpg"
+          alt="Golden Guardians Logo"
+          className="w-full h-auto object-contain"
         />
       </div>
     </div>
