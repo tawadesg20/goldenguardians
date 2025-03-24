@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import FeatureCard from './FeatureCard';
 
 const FeaturesSection = () => {
@@ -13,18 +14,18 @@ const FeaturesSection = () => {
         </p>
         
         <div className="flex justify-center gap-4 mb-16">
-          <a
-            href="/senior-registration"
+          <Link
+            to="/senior-registration"
             className="px-8 py-3 bg-[#8B4513] text-white rounded-md hover:bg-[#A0522D] transition-colors"
           >
             Register as Senior
-          </a>
-          <a
-            href="/volunteer-registration"
+          </Link>
+          <Link
+            to="/volunteer-registration"
             className="px-8 py-3 bg-[#DEB887] text-[#8B4513] rounded-md hover:bg-[#D2B48C] transition-colors"
           >
             Become a Volunteer
-          </a>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
